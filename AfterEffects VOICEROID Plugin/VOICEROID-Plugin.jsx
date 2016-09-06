@@ -1,6 +1,6 @@
 
 
-//共通設定/
+//共通設定
 
 var maxNunChars = 10;   //最大キャラ数
 var thumbnailFolder = "/c/Program Files/Adobe/Adobe After Effects CC 2015.3/Support Files/Scripts/Wall Studio Script/Thumbnail Cash";
@@ -52,7 +52,7 @@ app.cancelTask(taskID);
 var curentFolder = Folder.current.toString(); //ケツスラッシュはついてない
 thumbnailFolderInit();
 var mainPanel = createUI(this);
-//monitoring();
+monitoring();
 
 
 
