@@ -42,7 +42,7 @@ monitoring();
 
 function createUI(thisObj) {
 
-    var mainPanel = (thisObj instanceof Panel) ? thisObj : new Window("palette", "実況動画支援", wsFunc.xywh(200, 150, 210, 300));
+    var mainPanel = (thisObj instanceof Panel) ? thisObj : new Window("window", "実況動画支援", wsFunc.xywh(200, 150, 210, 300));
     mainPanel.onClose = function () {
 
         //alert("STOP");

@@ -5,7 +5,7 @@
 
 var wsFunc ={
 
-    repeat (obj, length) {
+    repeat : function (obj, length) {
         if (typeof obj == "undefined") { obj = 0; }
         var rtn = [];
         for (var i = 0; i < length; i++) {
@@ -16,7 +16,7 @@ var wsFunc ={
 
 
 
-    xywh (x, y, w, h) {
+    xywh : function (x, y, w, h) {
         //例外OK
         if (typeof x == "number" && typeof y == "number" && typeof w == "number" && typeof h == "number") {
             return [x, y, x + w, y + h];
@@ -26,7 +26,7 @@ var wsFunc ={
 
 
 
-    colorNumCode (codeOrArray) {
+    colorNumCode: function (codeOrArray) {
 
         //例外OK
         if (Array.isArray(codeOrArray)) {
@@ -50,7 +50,7 @@ var wsFunc ={
 
 
     //  Set1∪Set2 
-    setInter (set1, set2) {
+    setInter: function (set1, set2) {
         //例外OK
         if (!Array.isArray(set1) || !Array.isArray(set2)) { return []; }
         var rtn = [];
@@ -67,7 +67,7 @@ var wsFunc ={
 
 
     //  Set1＼Set2
-    setDif (set1, set2) {
+    setDif: function (set1, set2) {
 
         //例外OK
         if (!Array.isArray(set1) || !Array.isArray(set2)) { return []; }
@@ -85,7 +85,7 @@ var wsFunc ={
 
 
     //未使用
-    peekee (value, rate) {
+    peekee: function (value, rate) {
         value += rate;
         if (value < 0) {
             value = 0;
@@ -98,7 +98,7 @@ var wsFunc ={
 
 
     //未使用
-    peekeeSmooth (value, rate) {
+    peekeeSmooth: function (value, rate) {
         if (rate > 0) {
             value = 1 - (1 - value) * rate;
         } else {
@@ -109,7 +109,7 @@ var wsFunc ={
 
 
 
-    toHLS (r, g, b) {
+    toHLS : function (r, g, b) {
 
 
         if (Array.isArray(r)) {
@@ -162,7 +162,7 @@ var wsFunc ={
 
 
 
-    toRGB (h, l, s) {
+    toRGB : function (h, l, s) {
 
         if (Array.isArray(h)) {
             s = h[2];
