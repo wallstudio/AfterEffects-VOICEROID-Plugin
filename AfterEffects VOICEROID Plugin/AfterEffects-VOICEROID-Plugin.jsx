@@ -1,6 +1,6 @@
 
 
-//‹¤’Êİ’è
+//‹¤’Êİ’è/
 
 var maxNunChars = 10;   //Å‘åƒLƒƒƒ‰”
 var thumbnailFolder = "/c/Program Files/Adobe/Adobe After Effects CC 2015.3/Support Files/Scripts/Wall Studio Script/Thumbnail Cash";
