@@ -1,21 +1,21 @@
+ï»¿
 
+//å…±é€šè¨­å®š
 
-//‹¤’Êİ’è
-
-var maxNunChars = 10;   //Å‘åƒLƒƒƒ‰”
+var maxNunChars = 10;   //æœ€å¤§ã‚­ãƒ£ãƒ©æ•°
 var thumbnailFolder = "/c/Program Files/Adobe/Adobe After Effects CC 2015.3/Support Files/Scripts/Wall Studio Script/Thumbnail Cash";
 var monitoringInterval = 750;
 var thumbnailSize = 110;
 var previewSize = 200;
 
-//‹¤—Lƒf[ƒ^
+//å…±æœ‰ãƒ‡ãƒ¼ã‚¿
 var standCfgStr = "";
 var monitoringFolders = (function () {
     var rtn = new Array(maxNunChars);
     for (var i = 0; i < maxNunChars; i++) {
         rtn[i] = new Object();
         rtn[i].path = "";
-        //monitaring()‚Å‚Í.path‚ª–³‚¯‚ê‚Î‘f’Ê‚è‚·‚é‚©‚ç«‚Ì‰Šú‰»‚ÍQÆƒ{ƒ^ƒ“.onClick‚É”C‚¹‚Ä‚à‚¢‚¢H
+        //monitaring()ã§ã¯.pathãŒç„¡ã‘ã‚Œã°ç´ é€šã‚Šã™ã‚‹ã‹ã‚‰â†“ã®åˆæœŸåŒ–ã¯å‚ç…§ãƒœã‚¿ãƒ³.onClickã«ä»»ã›ã¦ã‚‚ã„ã„ï¼Ÿ
         rtn[i].initFlg = false;
         rtn[i].oldList = new Array();
     }
@@ -49,7 +49,7 @@ var monitoringFoldersEnable = (function () {
 
 //main
 app.cancelTask(taskID);
-var curentFolder = Folder.current.toString(); //ƒPƒcƒXƒ‰ƒbƒVƒ…‚Í‚Â‚¢‚Ä‚È‚¢
+var curentFolder = Folder.current.toString(); //ã‚±ãƒ„ã‚¹ãƒ©ãƒƒã‚·ãƒ¥ã¯ã¤ã„ã¦ãªã„
 thumbnailFolderInit();
 var mainPanel = createUI(this);
 monitoring();
@@ -59,7 +59,7 @@ monitoring();
 /*////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////
 
-          1.UI‚ÌÀ‘•
+          1.UIã®å®Ÿè£…
 
 /////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////*/
@@ -67,7 +67,7 @@ monitoring();
 
 function createUI(thisObj) {
 
-    var mainPanel = (thisObj instanceof Panel) ? thisObj : new Window("palette", "À‹µ“®‰æx‰‡", xywh(200, 150, 210, 300));
+    var mainPanel = (thisObj instanceof Panel) ? thisObj : new Window("palette", "å®Ÿæ³å‹•ç”»æ”¯æ´", xywh(200, 150, 210, 300));
     mainPanel.onClose = function () {
 
         //alert("STOP");
@@ -77,29 +77,29 @@ function createUI(thisObj) {
     }
 
 
-    //ŠÄ‹ŠÔŠu‚Ìİ’è
-    var intervalLabel = mainPanel.add("statictext", xywh(5, 5, 100, 20), "ŠÄ‹‚ÌŠÔŠu(ms)");
+    //ç›£è¦–é–“éš”ã®è¨­å®š
+    var intervalLabel = mainPanel.add("statictext", xywh(5, 5, 100, 20), "ç›£è¦–ã®é–“éš”(ms)");
     var intervalField = mainPanel.add("edittext", xywh(5, 30, 50, 20), monitoringInterval);
-    var updataIntervalbutton = mainPanel.add("button", xywh(60, 30, 40, 20), "XV");
+    var updataIntervalbutton = mainPanel.add("button", xywh(60, 30, 40, 20), "æ›´æ–°");
     updataIntervalbutton.onClick = function () {
         var interval = parseInt(intervalField.text);
-        //—áŠOOK
+        //ä¾‹å¤–OK
         if (interval && interval > 0) {
             monitoringInterval = intervalField.text;
         } else {
             intervalField.text = monitoringInterval;
-            alert("•s³‚È“ü—Í’l");
+            alert("ä¸æ­£ãªå…¥åŠ›å€¤");
         }
     };
 
 
 
-    //ƒfƒoƒbƒO¨‹Ù‹}’â~ƒ{ƒ^ƒ“iƒpƒlƒ‹‚ğ•Â‚¶‚Ä‚àƒvƒƒZƒXƒ`ƒF[ƒ“‚ªc‚é‚Ì‚Å‚±‚ê‚ÅE‚µ‚Ä‚©‚ç•Â‚¶‚Ä‚à‚ç‚¤‚«j
-    var stopButton = mainPanel.add("button", xywh(102, 30, 20, 20), "~");
+    //ãƒ‡ãƒãƒƒã‚°â†’ç·Šæ€¥åœæ­¢ãƒœã‚¿ãƒ³ï¼ˆãƒ‘ãƒãƒ«ã‚’é–‰ã˜ã¦ã‚‚ãƒ—ãƒ­ã‚»ã‚¹ãƒã‚§ãƒ¼ãƒ³ãŒæ®‹ã‚‹ã®ã§ã“ã‚Œã§æ®ºã—ã¦ã‹ã‚‰é–‰ã˜ã¦ã‚‚ã‚‰ã†ãï¼‰
+    var stopButton = mainPanel.add("button", xywh(102, 30, 20, 20), "Ã—");
     stopButton.onClick = function () {
         app.cancelTask(taskID);
         writeLn("Cancel " + taskID + "(" + monitoringCounter + ")");
-        //‰Ÿ‚µ‚Ä‚àÁ‚¦‚È‚¢‚ª“à•”ƒIƒuƒWƒFƒNƒg‚ÍÁ‚¦‚é‚æ‚¤‚ÅA2‰ñ‰Ÿ‚·‚ÆƒGƒ‰[‚É‚È‚é‚Ì‚Å–³Œø
+        //æŠ¼ã—ã¦ã‚‚æ¶ˆãˆãªã„ãŒå†…éƒ¨ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¯æ¶ˆãˆã‚‹ã‚ˆã†ã§ã€2å›æŠ¼ã™ã¨ã‚¨ãƒ©ãƒ¼ã«ãªã‚‹ã®ã§ç„¡åŠ¹
         //mainPanel.close();
     };
     //var popB = mainPanel.add("button", xywh(170, 30, 40, 20), "POP");
@@ -110,21 +110,21 @@ function createUI(thisObj) {
 
 
 
-    //—§‚¿ŠGİ’èƒ_ƒCƒAƒƒO‚ÌŒÄ‚Ño‚µ
-    var callStandLabel = mainPanel.add("statictext", xywh(120, 5, 40, 20), "—§‚¿ŠG");
+    //ç«‹ã¡çµµè¨­å®šãƒ€ã‚¤ã‚¢ãƒ­ã‚°ã®å‘¼ã³å‡ºã—
+    var callStandLabel = mainPanel.add("statictext", xywh(120, 5, 40, 20), "ç«‹ã¡çµµ");
     var callStandEnable = mainPanel.add("checkbox", xywh(160, 9, 20, 20));
     callStandEnable.value = true;
     callStandEnable.onClick = function () {
         standEnable = this.value;
     }
-    var callStandButton = mainPanel.add("button", xywh(130, 30, 40, 20), "İ’è");
+    var callStandButton = mainPanel.add("button", xywh(130, 30, 40, 20), "è¨­å®š");
     callStandButton.onClick = function () {
-        //ƒ{ƒ^ƒ“
+        //ãƒœã‚¿ãƒ³
         createStandDialog();
     }
 
 
-    //ƒXƒNƒ[ƒ‹ƒo[
+    //ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«ãƒãƒ¼
 
     var scrollberLen = 200;
     var scrollber = mainPanel.add("scrollbar", xywh(182, 60, 18, 200), 0, 0, 100);
@@ -136,28 +136,28 @@ function createUI(thisObj) {
         }
     }
 
-    //ŠÄ‹ƒtƒHƒ‹ƒ_İ’è
+    //ç›£è¦–ãƒ•ã‚©ãƒ«ãƒ€è¨­å®š
 
     var wrapFolders = mainPanel.add("panel", xywh(5, 60, 176, scrollberLen));
     var folderH = 81;
     var folders = [];
     for (var i = 1; i <= maxNunChars; i++) {
         var panel = wrapFolders.add("panel", xywh(0, 0 + folderH * (i - 1), 200, 80));
-        //panel.children[n]‚ÅƒAƒNƒZƒX‚Å‚«‚é
-        var folderLabel = panel.add("statictext", xywh(5, 3, 100, 20), "ŠÄ‹ƒtƒHƒ‹ƒ_" + i);
+        //panel.children[n]ã§ã‚¢ã‚¯ã‚»ã‚¹ã§ãã‚‹
+        var folderLabel = panel.add("statictext", xywh(5, 3, 100, 20), "ç›£è¦–ãƒ•ã‚©ãƒ«ãƒ€" + i);
         var folderEnable = panel.add("checkbox", xywh(110, 7, 20, 20));
         folderEnable.charID = i - 1;
         folderEnable.value = monitoringFoldersEnable[i - 1];
         folderEnable.onClick = function () {
             monitoringFoldersEnable[this.charID] = this.value;
         }
-        var folderField = panel.add("edittext", xywh(5, 27, 100, 20), "");  //ƒ†[ƒU[‚Ì’¼‘Å‚¿‚Íƒnƒ“ƒhƒ‹‚µ‚È‚¢
-        folderField.text = "–¢w’è";
-        var refButton = panel.add("button", xywh(110, 27, 40, 20), "QÆ");
+        var folderField = panel.add("edittext", xywh(5, 27, 100, 20), "");  //ãƒ¦ãƒ¼ã‚¶ãƒ¼ã®ç›´æ‰“ã¡ã¯ãƒãƒ³ãƒ‰ãƒ«ã—ãªã„
+        folderField.text = "æœªæŒ‡å®š";
+        var refButton = panel.add("button", xywh(110, 27, 40, 20), "å‚ç…§");
         refButton.indexNun = i;
         refButton.onClick = function () {
-            var folderObj = Folder.selectDialog("‰¹ºƒf[ƒ^‚ğŠÄ‹‚·‚éƒtƒHƒ‹ƒ_‚ğ‘I‘ğ‚µ‚Ä‚­‚¾‚³‚¢(ƒLƒƒƒ‰ID:" + i + ")");
-            //—áŠOOK
+            var folderObj = Folder.selectDialog("éŸ³å£°ãƒ‡ãƒ¼ã‚¿ã‚’ç›£è¦–ã™ã‚‹ãƒ•ã‚©ãƒ«ãƒ€ã‚’é¸æŠã—ã¦ãã ã•ã„(ã‚­ãƒ£ãƒ©ID:" + i + ")");
+            //ä¾‹å¤–OK
             if (folderObj != null) {
                 this.parent.children[2].text = folderObj.absoluteURI;
                 var obj = new Object();
@@ -169,22 +169,22 @@ function createUI(thisObj) {
             }
         }
 
-        var idLabel = panel.add("statictext", xywh(5, 52, 70, 20), "ƒLƒƒƒ‰ID");
-        //–¢À‘•
+        var idLabel = panel.add("statictext", xywh(5, 52, 70, 20), "ã‚­ãƒ£ãƒ©ID");
+        //æœªå®Ÿè£…
         var id = panel.add("dropdownlist", xywh(50, 52, 40, 20), (function (n) {
             var rtn = []; for (var j = 1; j <= maxNunChars; j++) { rtn[j - 1] = j; } return rtn
         }(maxNunChars)));
         id.selection = i - 1;
 
-        var colorLabel = panel.add("statictext", xywh(95, 52, 20, 20), "F");
+        var colorLabel = panel.add("statictext", xywh(95, 52, 20, 20), "è‰²");
         var colorField = panel.add("edittext", xywh(115, 52, 55, 20), colors[i]);
         colorField.charID = i;
         colorField.onChange = function () {
-            //—áŠOOK
+            //ä¾‹å¤–OK
             if (this.text.match(/^#[(0-9)(A-F)(a-f)]{6}$/)) {
                 colors[this.charID - 1] = this.text;
                 this.graphics.backgroundColor = this.graphics.newBrush(this.graphics.PenType.SOLID_COLOR, colorArray16Change(colors[this.charID - 1] + "FF"), 1);
-            } else { alert("•s³’l"); }
+            } else { alert("ä¸æ­£å€¤"); }
         }
 
         folders[i - 1] = panel;
@@ -196,19 +196,19 @@ function createUI(thisObj) {
 function createStandDialog() {
 
 
-    var standDialog = new Window("dialog", "À‹µ“®‰æx‰‡—§‚¿ŠGİ’è", xywh(200, 150, 1200, 680));
+    var standDialog = new Window("dialog", "å®Ÿæ³å‹•ç”»æ”¯æ´ç«‹ã¡çµµè¨­å®š", xywh(200, 150, 1200, 680));
 
-    //ƒRƒ“ƒgƒ[ƒ‹
-    var importButton = standDialog.add("button", xywh(10, 10, 80, 20), "ƒCƒ“ƒ|[ƒg");
+    //ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«
+    var importButton = standDialog.add("button", xywh(10, 10, 80, 20), "ã‚¤ãƒ³ãƒãƒ¼ãƒˆ");
     importButton.onClick = function () {
         importStandCfg(chars);
     }
-    var exportButton = standDialog.add("button", xywh(100, 10, 80, 20), "ƒGƒNƒXƒ|[ƒg");
+    var exportButton = standDialog.add("button", xywh(100, 10, 80, 20), "ã‚¨ã‚¯ã‚¹ãƒãƒ¼ãƒˆ");
     exportButton.onClick = function () {
         exportStandCfg(chars);
     };
 
-    //ƒXƒNƒ[ƒ‹ƒo[
+    //ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«ãƒãƒ¼
     var wrapH = 600;
     var scrollber = standDialog.add("scrollbar", xywh(1180, 50, 18, wrapH), 0, 0, 100);
     scrollber.onChanging = function () {
@@ -222,22 +222,22 @@ function createStandDialog() {
 
     var wrapChars = standDialog.add("panel", xywh(10, 50, 1170, wrapH));
     var chars = [];
-    var charPanelH = 330    //100x100‚Å30ŒÂ‚®‚ç‚¢“Ë‚Á‚ß‚é
-    var charIconW = thumbnailSize;    //20px‚ÍQÆ‚ÅŒ¸‚éCÀ¿110x90
+    var charPanelH = 330    //100x100ã§30å€‹ãã‚‰ã„çªã£è¾¼ã‚ã‚‹
+    var charIconW = thumbnailSize;    //20pxã¯å‚ç…§ã§æ¸›ã‚‹ï¼Œå®Ÿè³ª110x90
     var iconColumns = Math.round((1180 - 60) / (charIconW + 1));
     var iconRow = Math.round(charPanelH / (charIconW + 1));
     var notSelectedIconFileObj = new File(curentFolder + "/notSelectedIcon.png");
-    //—áŠOOK
+    //ä¾‹å¤–OK
     if (!notSelectedIconFileObj.exists) {
-        alert("\"notSelectedIcon.png\"‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ");
+        alert("\"notSelectedIcon.png\"ãŒè¦‹ã¤ã‹ã‚Šã¾ã›ã‚“");
         return;
     }
     for (var i = 0; i < maxNunChars; i++) {
-        //ƒLƒƒƒ‰‚²‚Æ‚Ìİ’è‚Ì’†g
+        //ã‚­ãƒ£ãƒ©ã”ã¨ã®è¨­å®šã®ä¸­èº«
         var panel = wrapChars.add("panel", xywh(0, 0 + charPanelH * i, 1180, charPanelH));
-        //panel.children[n]‚ÅƒAƒNƒZƒX‚Å‚«‚é
+        //panel.children[n]ã§ã‚¢ã‚¯ã‚»ã‚¹ã§ãã‚‹
         var noLabel = panel.add("statictext", xywh(0, 0, 40, 20), "#" + (i + 1));
-        var name = panel.add("edittext", xywh(0, 30, 65, 20), "ƒƒ‚");
+        var name = panel.add("edittext", xywh(0, 30, 65, 20), "ãƒ¡ãƒ¢");
         var transeFieldsChange = function () {
             var pxValue = parseInt(this.text);
             if (pxValue >= 0) {
@@ -262,24 +262,24 @@ function createStandDialog() {
         putH.onChange = transeFieldsChange;
         var icons = [];
         for (var j = 0; j < iconColumns * iconRow; j++) {
-            //1‚Â1‚Â‚ÌƒZƒ‹
+            //1ã¤1ã¤ã®ã‚»ãƒ«
             icons[j] = panel.add("panel", xywh(65 + charIconW * (j % iconColumns), 0 + charIconW * Math.floor(j / iconColumns), charIconW, charIconW));
             if (notSelectedIconFileObj.exists) {
                 var iconBotton = icons[j].add("iconbutton", xywh(1, 1, charIconW, charIconW), notSelectedIconFileObj);
                 iconBotton.imagePath = notSelectedIconFileObj.fsName;
                 iconBotton.onClick = function () {
-                    var newImage = File.openDialog("V‚µ‚¢—§‚¿ŠG‚ğ‘I‚ñ‚Å‚­‚¾‚³‚¢");
+                    var newImage = File.openDialog("æ–°ã—ã„ç«‹ã¡çµµã‚’é¸ã‚“ã§ãã ã•ã„");
                     if (newImage) {
                         var thumbnail = imageSizeDown(newImage.toString(), charIconW);
                         var thumObj = new File(thumbnail);
-                        //—áŠOOK
+                        //ä¾‹å¤–OK
                         if (thumObj) {
                             this.icon = thumObj;
-                            this.imagePath = thumbnail;   //‰ñûƒf[ƒ^
+                            this.imagePath = thumbnail;   //å›åãƒ‡ãƒ¼ã‚¿
                             this.srcPath = newImage.toString();
                             this.prePath = imageSizeDown(newImage.toString(), previewSize)
                             exportStandCfg(chars, standCfgStr);
-                        } else { alert("ƒTƒ€ƒlƒCƒ‹‚Ì¶¬ƒGƒ‰["); }
+                        } else { alert("ã‚µãƒ ãƒã‚¤ãƒ«ã®ç”Ÿæˆã‚¨ãƒ©ãƒ¼"); }
 
                     }
                 }
@@ -298,16 +298,16 @@ function createStandDialog() {
 
 
 function xywh(x, y, w, h) {
-    //—áŠOOK
+    //ä¾‹å¤–OK
     if (typeof x == "number" && typeof y == "number" && typeof w == "number" && typeof h == "number") {
         return [x, y, x + w, y + h];
     }
-    alert("Vector4À•Ww’è‚ª•s³");
+    alert("Vector4åº§æ¨™æŒ‡å®šãŒä¸æ­£");
 }
 
 
 function colorArray16Change(color) {
-    //—áŠOOK
+    //ä¾‹å¤–OK
     if (Array.isArray(color)) {
         var rtn = "#"
         for (var i = 0; i < color.length; i++) {
@@ -322,7 +322,7 @@ function colorArray16Change(color) {
         }
         return rtn;
     }
-    alert("“à•”ƒGƒ‰[FFw’è‚ª•s³");
+    alert("å†…éƒ¨ã‚¨ãƒ©ãƒ¼ï¼šè‰²æŒ‡å®šãŒä¸æ­£");
 }
 
 
@@ -343,12 +343,12 @@ function imageSizeDown(src, size) {
     var reg3 = new RegExp("/", "g");
 
     var stdIn = "\"" + decodeURI(curentFolder).replace(reg1, "$1:").replace(reg2, "%homepath%").replace(reg3, "\\") + "\\ri.exe\"";
-    stdIn += " \"" + decodeURI(src).replace(reg1, "$1:").replace(reg2, "%homepath%").replace(reg3, "\\") + "\"";    //‘æˆêFƒŠƒ\[ƒX
-    stdIn += " \"" + decodeURI(thumbnailFolder).replace(reg1, "$1:").replace(reg2, "%homepath%").replace(reg3, "\\") + "\\" + decodeURI(filename) + ".png\"";    //‘æ“ñFo—Í
-    stdIn += " " + size;    //‘æOF‘å‚«‚³
+    stdIn += " \"" + decodeURI(src).replace(reg1, "$1:").replace(reg2, "%homepath%").replace(reg3, "\\") + "\"";    //ç¬¬ä¸€ï¼šãƒªã‚½ãƒ¼ã‚¹
+    stdIn += " \"" + decodeURI(thumbnailFolder).replace(reg1, "$1:").replace(reg2, "%homepath%").replace(reg3, "\\") + "\\" + decodeURI(filename) + ".png\"";    //ç¬¬äºŒï¼šå‡ºåŠ›
+    stdIn += " " + size;    //ç¬¬ä¸‰ï¼šå¤§ãã•
 
     var stdOut = system.callSystem(stdIn);
-    //—áŠOOK
+    //ä¾‹å¤–OK
     if (stdOut.match("prm_error")) {
         alert(stdOut);
     }
@@ -364,7 +364,7 @@ function importStandCfg(chars, intraMem) {
     if (intraMem != null) {
         importStr = standCfgStr;
     } else {
-        var importFile = File.openDialog("ƒCƒ“ƒ|[ƒg‚·‚éƒtƒ@ƒCƒ‹");
+        var importFile = File.openDialog("ã‚¤ãƒ³ãƒãƒ¼ãƒˆã™ã‚‹ãƒ•ã‚¡ã‚¤ãƒ«");
         if (importFile) {
             importFile.open("r");
             importStr = importFile.read();
@@ -374,12 +374,12 @@ function importStandCfg(chars, intraMem) {
     var jsonObj = JSON.parse(importStr);
 
     for (var i = 0; i < chars.length; i++) {
-        //ŠeƒLƒƒƒ‰
+        //å„ã‚­ãƒ£ãƒ©
         var panel = chars[i];
         for (var j = 0; j < panel.icons.length; j++) {
-            //ŠeƒZƒ‹‚ğ’²¸
+            //å„ã‚»ãƒ«ã‚’èª¿æŸ»
             var imgFile = new File(jsonObj[i][j][1]);
-            //—áŠOOK
+            //ä¾‹å¤–OK
             if (imgFile) {
                 panel.icons[j].children[0].icon = imgFile;
 
@@ -387,7 +387,7 @@ function importStandCfg(chars, intraMem) {
                 panel.icons[j].children[0].imagePath = jsonObj[i][j][1];
                 panel.icons[j].children[0].prePath = jsonObj[i][j][2];
 
-            } else { alert("ƒCƒ“ƒ|[ƒgƒGƒ‰["); }
+            } else { alert("ã‚¤ãƒ³ãƒãƒ¼ãƒˆã‚¨ãƒ©ãƒ¼"); }
         }
     }
     exportStandCfg(chars, standCfgStr);
@@ -401,12 +401,12 @@ function exportStandCfg(chars, intraMem) {
 
     var cellses = [];
     for (var i = 0; i < chars.length; i++) {
-        //ŠeƒLƒƒƒ‰
+        //å„ã‚­ãƒ£ãƒ©
         var panel = chars[i];
 
         var cells = [];
         for (var j = 0; j < panel.icons.length; j++) {
-            //ŠeƒZƒ‹‚ğ’²¸
+            //å„ã‚»ãƒ«ã‚’èª¿æŸ»
             var srcData = panel.icons[j].children[0].srcPath;
             var iconData = panel.icons[j].children[0].imagePath;
             var preData = panel.icons[j].children[0].prePath;
@@ -424,15 +424,15 @@ function exportStandCfg(chars, intraMem) {
     if (intraMem != null) {
         standCfgStr = exportStr;
     } else {
-        var exportPath = File.saveDialog("İ’èƒtƒ@ƒCƒ‹‚Ì•Û‘¶æ‚ğŒˆ‚ß‚Ä‚­‚¾‚³‚¢", "*.js");
+        var exportPath = File.saveDialog("è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«ã®ä¿å­˜å…ˆã‚’æ±ºã‚ã¦ãã ã•ã„", "*.js");
         if (exportPath) {
             var saveCfgFile = new File(exportPath);
-            //—áŠOOK
+            //ä¾‹å¤–OK
             if (saveCfgFile) {
                 saveCfgFile.open("w");
                 saveCfgFile.write(exportStr);
                 saveCfgFile.close();
-            } else { alert("ƒGƒNƒXƒ|[ƒgƒGƒ‰["); }
+            } else { alert("ã‚¨ã‚¯ã‚¹ãƒãƒ¼ãƒˆã‚¨ãƒ©ãƒ¼"); }
         }
     }
 }
@@ -442,8 +442,8 @@ function exportStandCfg(chars, intraMem) {
 /*////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////
 
-        2.ŠÄ‹ƒ‹[ƒ`ƒ“‚ÌÀ‘•
-        3.ƒtƒHƒ‹ƒ_‚Ì’†g‚Ì•Ï‰»‚ÌŒŸoƒpƒXæ“¾
+        2.ç›£è¦–ãƒ«ãƒ¼ãƒãƒ³ã®å®Ÿè£…
+        3.ãƒ•ã‚©ãƒ«ãƒ€ã®ä¸­èº«ã®å¤‰åŒ–ã®æ¤œå‡ºãƒ‘ã‚¹å–å¾—
 
 /////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////*/
@@ -453,10 +453,10 @@ function monitoring() {
     monitoringCounter++;
 
     for (var i = 0; i < monitoringFolders.length; i++) {
-        //disable‚È‚ç‰½‚à‚µ‚È‚¢
+        //disableãªã‚‰ä½•ã‚‚ã—ãªã„
         if (!monitoringFoldersEnable[i]) { continue; }
-        //ƒpƒX‚ªw’è‚³‚ê‚Ä‚¢‚È‚¯‚ê‚Î‰½‚à‚µ‚È‚¢
-        if (monitoringFolders[i].path == "" || monitoringFolders[i].path == "–¢w’è") { continue; }
+        //ãƒ‘ã‚¹ãŒæŒ‡å®šã•ã‚Œã¦ã„ãªã‘ã‚Œã°ä½•ã‚‚ã—ãªã„
+        if (monitoringFolders[i].path == "" || monitoringFolders[i].path == "æœªæŒ‡å®š") { continue; }
 
         var folObj = new Folder(monitoringFolders[i].path);
         var fileObjs = folObj.getFiles("*.wav");
@@ -466,24 +466,24 @@ function monitoring() {
         }
 
 
-        //oldList‚ª‚ ‚é‚È‚ç”äŠr‚·‚é
+        //oldListãŒã‚ã‚‹ãªã‚‰æ¯”è¼ƒã™ã‚‹
         if (Array.isArray(monitoringFolders[i].oldList)) {
             if (monitoringFolders[i].initFlg) {
                 if (filePathes.length > 0) {
-                    alert("ŠÄ‹ƒfƒBƒŒƒNƒgƒŠ‚É‰‚ß‚©‚çWAVAƒtƒ@ƒCƒ‹‚ª‚ ‚è‚Ü‚·\n‚±‚ê‚ç‚ÍƒXƒLƒbƒv‚³‚ê‚Ü‚µ‚½\n" + filePathes.join("\n"));
+                    alert("ç›£è¦–ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã«åˆã‚ã‹ã‚‰WAVAãƒ•ã‚¡ã‚¤ãƒ«ãŒã‚ã‚Šã¾ã™\nã“ã‚Œã‚‰ã¯ã‚¹ã‚­ãƒƒãƒ—ã•ã‚Œã¾ã—ãŸ\n" + filePathes.join("\n"));
                 }
                 monitoringFolders[i].initFlg = false;
-                writeLn("ŠÄ‹ƒtƒHƒ‹ƒ_‚ÌXV");
+                writeLn("ç›£è¦–ãƒ•ã‚©ãƒ«ãƒ€ã®æ›´æ–°");
             } else {
                 var deff = setDiff(filePathes, monitoringFolders[i].oldList);
                 if (deff.length == 1) {
                     createLayer(deff[0], i);
                 } else if (deff.length > 1) {
-                    alert("•¡”XV‚ğŒŸ’m‚µ‚Ü‚µ‚½\nŒã‚ÉŒŸ’m‚³‚ê‚½ƒtƒ@ƒCƒ‹‚Í”½‰f‚³‚ê‚Ä‚¢‚Ü‚¹‚ñ‚Ì‚ÅŠm”F‚µ‚Ä‚­‚¾‚³‚¢");
+                    alert("è¤‡æ•°æ›´æ–°ã‚’æ¤œçŸ¥ã—ã¾ã—ãŸ\nå¾Œã«æ¤œçŸ¥ã•ã‚ŒãŸãƒ•ã‚¡ã‚¤ãƒ«ã¯åæ˜ ã•ã‚Œã¦ã„ã¾ã›ã‚“ã®ã§ç¢ºèªã—ã¦ãã ã•ã„");
                 }
             }
         }
-        //oldList‚ğXV‚·‚é
+        //oldListã‚’æ›´æ–°ã™ã‚‹
         monitoringFolders[i].oldList = filePathes;
 
 
@@ -492,12 +492,12 @@ function monitoring() {
     }
 
     taskID = app.scheduleTask("monitoring()", monitoringInterval, false);
-    writeLn("ŠÄ‹’†(" + monitoringCounter + ")");
+    writeLn("ç›£è¦–ä¸­(" + monitoringCounter + ")");
 }
 
-//  Set1¾Set2 –¢g—p
+//  Set1âˆªSet2 æœªä½¿ç”¨
 function setInter(set1, set2) {
-    //—áŠOOK
+    //ä¾‹å¤–OK
     if (!Array.isArray(set1) || !Array.isArray(set2)) { return []; }
     var rtn = [];
     for (var i = 0; i < set1.length; i++) {
@@ -510,12 +510,12 @@ function setInter(set1, set2) {
     return rtn;
 }
 
-//  Set1_Set2
+//  Set1ï¼¼Set2
 function setDiff(set1, set2) {
 
-    //—áŠOOK
+    //ä¾‹å¤–OK
     if (!Array.isArray(set1) || !Array.isArray(set2)) { return []; }
-    //”z—ñ‚ÌƒRƒs[
+    //é…åˆ—ã®ã‚³ãƒ”ãƒ¼
     var rtn = set1.slice();
     for (var i = 0; i < set2.length; i++) {
         var index = rtn.indexOf(set2[i]);
@@ -530,11 +530,11 @@ function setDiff(set1, set2) {
 /*////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////
 
-        4.‰¹º‚ğƒAƒCƒeƒ€‚Ö’Ç‰Á
-        5.ƒŒƒCƒ„[‚Ö‚Ì”z’u
-        6.ŠJn‚Æƒfƒ…ƒŒ[ƒVƒ‡ƒ“‚Ìæ“¾
-        7.š–‹‚ğ”z’u
-        9.—§‚¿ŠG‚Ì”z’u   
+        4.éŸ³å£°ã‚’ã‚¢ã‚¤ãƒ†ãƒ ã¸è¿½åŠ 
+        5.ãƒ¬ã‚¤ãƒ¤ãƒ¼ã¸ã®é…ç½®
+        6.é–‹å§‹ã¨ãƒ‡ãƒ¥ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³ã®å–å¾—
+        7.å­—å¹•ã‚’é…ç½®
+        9.ç«‹ã¡çµµã®é…ç½®   
 
 /////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////*/
@@ -542,11 +542,11 @@ function setDiff(set1, set2) {
 
 function createLayer(path, id) {
 
-    //’²¸
+    //èª¿æŸ»
     var fileObj = new File(path);
-    //—áŠOOK
+    //ä¾‹å¤–OK
     if (!fileObj) {
-        alert("‰¹º‚Ì“Ç‚İ‚İ‚É¸”s");
+        alert("éŸ³å£°ã®èª­ã¿è¾¼ã¿ã«å¤±æ•—");
         return;
     }
     var audio = app.project.importFile(new ImportOptions(fileObj));
@@ -555,19 +555,19 @@ function createLayer(path, id) {
 
     var text = "";
     var textFileObj = new File(path.replace(/\.wav$/, ".txt"));
-    //—áŠOOK
+    //ä¾‹å¤–OK
     if (textFileObj && textFileObj.open("r")) {
         text = textFileObj.read();
         textFileObj.close();
     } else {
-        alert("ƒeƒLƒXƒg‚ªŠJ‚¯‚Ü‚¹‚ñ\n‘ã‚í‚è‚Éƒtƒ@ƒCƒ‹ƒl[ƒ€‚ğg—p‚µ‚Ü‚·");
+        alert("ãƒ†ã‚­ã‚¹ãƒˆãŒé–‹ã‘ã¾ã›ã‚“\nä»£ã‚ã‚Šã«ãƒ•ã‚¡ã‚¤ãƒ«ãƒãƒ¼ãƒ ã‚’ä½¿ç”¨ã—ã¾ã™");
         text = fname.replace(/\.wav$/, "");
     }
 
     var targetComp = app.project.activeItem;
-    //—áŠOOK
+    //ä¾‹å¤–OK
     if (!(targetComp instanceof CompItem)) {
-        alert("‘I‘ğ‚³‚ê‚Ä‚¢‚éƒ^ƒCƒ€ƒ‰ƒCƒ“‚É’Ç‰Á‚Å‚«‚Ü‚¹‚ñ\n’Ç‰Á‰Â”\‚ÈƒRƒ“ƒ|ƒWƒVƒ‡ƒ“‚Å‚ ‚é‚±‚Æ‚ğ\nŠm”F‚µ‚Ä‚­‚¾‚³‚¢");
+        alert("é¸æŠã•ã‚Œã¦ã„ã‚‹ã‚¿ã‚¤ãƒ ãƒ©ã‚¤ãƒ³ã«è¿½åŠ ã§ãã¾ã›ã‚“\nè¿½åŠ å¯èƒ½ãªã‚³ãƒ³ãƒã‚¸ã‚·ãƒ§ãƒ³ã§ã‚ã‚‹ã“ã¨ã‚’\nç¢ºèªã—ã¦ãã ã•ã„");
         return;
     }
     var nowTime = targetComp.time;
@@ -578,17 +578,17 @@ function createLayer(path, id) {
     var standPath = standEnable ? createChoiceStandDialogCushion(id) : null;
 
 
-    //‰¹º’Ç‰Á
+    //éŸ³å£°è¿½åŠ 
     var audioLayer = targetComp.layers.add(audio);
     audioLayer.startTime = nowTime;
 
 
 
-    //—§‚¿ŠG’Ç‰Á
-    //—áŠOOK
+    //ç«‹ã¡çµµè¿½åŠ 
+    //ä¾‹å¤–OK
     if (standPath) {
         var standFileObj = new File(standPath);
-        //—áŠOOK
+        //ä¾‹å¤–OK
         if (standFileObj) {
             var stand = app.project.importFile(new ImportOptions(standFileObj));
             var standLayer = targetComp.layers.add(stand);
@@ -601,12 +601,12 @@ function createLayer(path, id) {
             var scale = (srcW > srcH ? trans[id][2] / srcW * 100 : trans[id][3] / srcH * 100);
             standLayer("scale").setValue([scale, scale]);
             standLayer("Opacity").expression = "transform.opacity = easeIn(time, inPoint, inPoint + 0.10, 0, 100) * ease(time, outPoint - 0.15, outPoint, 100, 0) / 100;";
-        } else { alert("—§‚¿ŠGƒtƒ@ƒCƒ‹‚ªŠJ‚¯‚Ü‚¹‚ñ"); }
+        } else { alert("ç«‹ã¡çµµãƒ•ã‚¡ã‚¤ãƒ«ãŒé–‹ã‘ã¾ã›ã‚“"); }
     }
 
 
 
-    //š–‹’Ç‰Á
+    //å­—å¹•è¿½åŠ 
     var textLayer = targetComp.layers.addBoxText([compW * 0.8, compH * 0.3], text);
 
     textLayer.startTime = nowTime;
@@ -620,7 +620,7 @@ function createLayer(path, id) {
     textCfg.fillColor = toRGB(baseColorHLS[0], 1 - (1 - baseColorHLS[1]) * 0.4, baseColorHLS[2]);
     textCfg.strokeColor = toRGB(baseColorHLS[0], baseColorHLS[1] * 0.6, baseColorHLS[2]);
     //textCfg.strokeWidth = 2;
-    //textCfg.font = "HGŠÛºŞ¼¯¸M-PRO";
+    //textCfg.font = "HGä¸¸ï½ºï¾ï½¼ï½¯ï½¸M-PRO";
     //textCfg.strokeOverFill = true;
     //textCfg.applyStroke = true;
     //textCfg.applyFill = true;
@@ -638,7 +638,7 @@ function createLayer(path, id) {
 
 }
 
-//–¢g—p
+//æœªä½¿ç”¨
 function peekee(value, rate) {
     value += rate;
     if (value < 0) {
@@ -649,7 +649,7 @@ function peekee(value, rate) {
     return value;
 }
 
-//–¢g—p
+//æœªä½¿ç”¨
 function peekeeSmooth(value, rate) {
     if (rate > 0) {
         value = 1 - (1 - value) * rate;
@@ -669,7 +669,7 @@ function toHLS(r, g, b) {
         r = r[0];
     }
 
-    //‹«ŠE’l•ÛŒì
+    //å¢ƒç•Œå€¤ä¿è­·
     r = r > 0.9999999999 ? 0.9999999999 : r;
     g = g > 0.9999999999 ? 0.9999999999 : g;
     b = b > 0.9999999999 ? 0.9999999999 : b;
@@ -702,7 +702,7 @@ function toHLS(r, g, b) {
 
     var rtn = [Math.abs(h), Math.abs(l), Math.abs(s)]
 
-    //‹«ŠE’l•ÛŒì
+    //å¢ƒç•Œå€¤ä¿è­·
     for (var i = 0; i < rtn.length; i++) {
         rtn[i] = rtn[i] > 0.9999999999 ? 0.9999999999 : rtn[i];
         rtn[i] = rtn[i] < 0.0000000001 ? 0.0000000001 : rtn[i];
@@ -721,7 +721,7 @@ function toRGB(h, l, s) {
     }
 
 
-    //‹«ŠE’l•ÛŒì
+    //å¢ƒç•Œå€¤ä¿è­·
     s = s > 0.9999999999 ? 0.9999999999 : s;
     l = l > 0.9999999999 ? 0.9999999999 : l;
     h = h > 0.9999999999 ? 0.9999999999 : h;
@@ -759,7 +759,7 @@ function toRGB(h, l, s) {
 
 
 
-    //‹«ŠE’l•ÛŒì
+    //å¢ƒç•Œå€¤ä¿è­·
     for (var i = 0; i < rtn.length; i++) {
         rtn[i] = rtn[i] > 0.9999999999 ? 0.9999999999 : rtn[i];
         rtn[i] = rtn[i] < 0.0000000001 ? 0.0000000001 : rtn[i];
@@ -775,7 +775,7 @@ function toRGB(h, l, s) {
 /*////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////
 
-        8.—§‚¿ŠG‚Ì‘I‘ğƒEƒBƒ“ƒhƒEUI‚Ì•\¦
+        8.ç«‹ã¡çµµã®é¸æŠã‚¦ã‚£ãƒ³ãƒ‰ã‚¦UIã®è¡¨ç¤º
 
 /////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////*/
@@ -784,9 +784,9 @@ function toRGB(h, l, s) {
 function createChoiceStandDialog(id) {
 
     var chosen = "";
-    var choiceStandDialog = new Window("dialog", "À‹µ“®‰æx‰‡—§‚¿ŠG‘I‘ğ", xywh(200, 150, 1020, 680));
+    var choiceStandDialog = new Window("dialog", "å®Ÿæ³å‹•ç”»æ”¯æ´ç«‹ã¡çµµé¸æŠ", xywh(200, 150, 1020, 680));
 
-    //ƒRƒ“ƒgƒ[ƒ‹
+    //ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«
     var page1Button = choiceStandDialog.add("button", xywh(10, 10, 30, 30), "1");
     page1Button.active = true;
     page1Button.onClick = function () {
@@ -812,7 +812,7 @@ function createChoiceStandDialog(id) {
     var page = [];
     for (var i = 0; i < 2 ; i++) {
 
-        //ƒy[ƒW1
+        //ãƒšãƒ¼ã‚¸1
         page[i] = choiceStandDialog.add("panel", xywh(10, 50, 1000, 600));
         var pageLabel = page[i].add("statictext", xywh(0, 0, 40, 20), "#" + (i + 1));
 
@@ -820,11 +820,11 @@ function createChoiceStandDialog(id) {
     }
 
     if (standCfgStr == "") {
-        alert("—§‚¿ŠG‚ªƒZƒbƒg‚³‚ê‚Ä‚¢‚Ü‚¹‚ñ");
+        alert("ç«‹ã¡çµµãŒã‚»ãƒƒãƒˆã•ã‚Œã¦ã„ã¾ã›ã‚“");
         return;
     }
     var jsonObj = JSON.parse(standCfgStr);
-    //—áŠO?OK
+    //ä¾‹å¤–?OK
     for (var i = 0; i < jsonObj[id].length; i++) {
         if (jsonObj[id][i][2] == null || jsonObj[id][i][2] == "undefined") {
             jsonObj[id][i][2] = curentFolder + "/notSelectedIcon.png";
@@ -844,7 +844,7 @@ function createChoiceStandDialog(id) {
         var preview = page[pageNo].add("panel", xywh(x, y, previewSize, previewSize));
         var path = jsonObj[id][i][2];
         var previewImageObj = new File(path);
-        //—áŠOOK
+        //ä¾‹å¤–OK
         if (previewImageObj) {
             var previewImage = preview.add("iconbutton", xywh(1, 1, previewSize, previewSize), previewImageObj);
             previewImage.window = choiceStandDialog;
@@ -855,7 +855,7 @@ function createChoiceStandDialog(id) {
                 this.window.close();
 
             }
-        } else { alert("ƒvƒŒƒrƒ…[‰æ‘œ‚ª“Ç‚İ‚ß‚Ü‚¹‚ñ"); }
+        } else { alert("ãƒ—ãƒ¬ãƒ“ãƒ¥ãƒ¼ç”»åƒãŒèª­ã¿è¾¼ã‚ã¾ã›ã‚“"); }
         var previewLabel = preview.add("statictext", xywh(0, 0, 40, 20), "#" + (i + 1));
 
     }
@@ -880,28 +880,28 @@ function createChoiceStandDialogCushion(id) {
 
 
 /*
-    ŠJ”­ƒƒ‚
+    é–‹ç™ºãƒ¡ãƒ¢
     
-    1.UI‚ÌÀ‘•
-        ƒpƒŒƒbƒg
-            ŠÄ‹ŠÔŠu[       ][XV]
+    1.UIã®å®Ÿè£…
+        ãƒ‘ãƒ¬ãƒƒãƒˆ
+            ç›£è¦–é–“éš”[       ][æ›´æ–°]
             
-            ŠÄ‹ƒtƒHƒ‹ƒ_1[        ]QÆ
-            ƒLƒƒƒ‰ID[      ]F[     ]
-            ŠÄ‹ƒtƒHƒ‹ƒ_2[        ]QÆ
-            ƒLƒƒƒ‰ID[      ]F[     ]
-            ŠÄ‹ƒtƒHƒ‹ƒ_3[        ]QÆ
-            ƒLƒƒƒ‰ID[      ]F[     ]
-            ŠÄ‹ƒtƒHƒ‹ƒ_4[        ]QÆ
-            ƒLƒƒƒ‰ID[      ]F[     ]
-            ŠÄ‹ƒtƒHƒ‹ƒ_5[        ]QÆ
-            ƒLƒƒƒ‰ID[      ]F[     ]
-            ŠÄ‹ƒtƒHƒ‹ƒ_6[        ]QÆ
-            ƒLƒƒƒ‰ID[      ]F[     ]
+            ç›£è¦–ãƒ•ã‚©ãƒ«ãƒ€1[        ]å‚ç…§
+            ã‚­ãƒ£ãƒ©ID[      ]è‰²[     ]
+            ç›£è¦–ãƒ•ã‚©ãƒ«ãƒ€2[        ]å‚ç…§
+            ã‚­ãƒ£ãƒ©ID[      ]è‰²[     ]
+            ç›£è¦–ãƒ•ã‚©ãƒ«ãƒ€3[        ]å‚ç…§
+            ã‚­ãƒ£ãƒ©ID[      ]è‰²[     ]
+            ç›£è¦–ãƒ•ã‚©ãƒ«ãƒ€4[        ]å‚ç…§
+            ã‚­ãƒ£ãƒ©ID[      ]è‰²[     ]
+            ç›£è¦–ãƒ•ã‚©ãƒ«ãƒ€5[        ]å‚ç…§
+            ã‚­ãƒ£ãƒ©ID[      ]è‰²[     ]
+            ç›£è¦–ãƒ•ã‚©ãƒ«ãƒ€6[        ]å‚ç…§
+            ã‚­ãƒ£ãƒ©ID[      ]è‰²[     ]
             
-            [—§‚¿ŠGƒZƒbƒg]    -> ƒEƒBƒ“ƒhƒE
+            [ç«‹ã¡çµµã‚»ãƒƒãƒˆ]    -> ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦
             
-        ƒEƒBƒ“ƒhƒE
+        ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦
             ID|1|2|3|4|5|6|
             1[                  ]
             2[                  ]
@@ -912,16 +912,16 @@ function createChoiceStandDialogCushion(id) {
             7[                  ]
             8[                  ]
             
-            [ƒCƒ“ƒ|[ƒg][ƒGƒNƒXƒ|[ƒg]
+            [ã‚¤ãƒ³ãƒãƒ¼ãƒˆ][ã‚¨ã‚¯ã‚¹ãƒãƒ¼ãƒˆ]
     
-    2.ŠÄ‹ƒ‹[ƒ`ƒ“‚ÌÀ‘•
-    3.ƒtƒHƒ‹ƒ_‚Ì’†g‚Ì•Ï‰»‚ÌŒŸoƒpƒXæ“¾
-    4.‰¹º‚ğƒAƒCƒeƒ€‚Ö’Ç‰Á
-    5.ƒŒƒCƒ„[‚Ö‚Ì”z’u
-    6.ŠJn‚Æƒfƒ…ƒŒ[ƒVƒ‡ƒ“‚Ìæ“¾
-    7.š–‹‚ğ”z’u
-    8.—§‚¿ŠG‚Ì‘I‘ğƒEƒBƒ“ƒhƒEUI‚Ì•\¦
-    9.—§‚¿ŠG‚Ì”z’u   
+    2.ç›£è¦–ãƒ«ãƒ¼ãƒãƒ³ã®å®Ÿè£…
+    3.ãƒ•ã‚©ãƒ«ãƒ€ã®ä¸­èº«ã®å¤‰åŒ–ã®æ¤œå‡ºãƒ‘ã‚¹å–å¾—
+    4.éŸ³å£°ã‚’ã‚¢ã‚¤ãƒ†ãƒ ã¸è¿½åŠ 
+    5.ãƒ¬ã‚¤ãƒ¤ãƒ¼ã¸ã®é…ç½®
+    6.é–‹å§‹ã¨ãƒ‡ãƒ¥ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³ã®å–å¾—
+    7.å­—å¹•ã‚’é…ç½®
+    8.ç«‹ã¡çµµã®é¸æŠã‚¦ã‚£ãƒ³ãƒ‰ã‚¦UIã®è¡¨ç¤º
+    9.ç«‹ã¡çµµã®é…ç½®   
     
     
     

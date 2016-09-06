@@ -1,5 +1,5 @@
-//–{‘Ì‚©‚ç“à•”Š®Œ‹‚µ‚½‹@”\‚ğ•ªŠ„‚·‚éƒtƒ@ƒCƒ‹
-//$.evalFile() ‚ÅƒCƒ“ƒ|[ƒg‚·‚é
+ï»¿//æœ¬ä½“ã‹ã‚‰å†…éƒ¨å®Œçµã—ãŸæ©Ÿèƒ½ã‚’åˆ†å‰²ã™ã‚‹ãƒ•ã‚¡ã‚¤ãƒ«
+//$.evalFile() ã§ã‚¤ãƒ³ãƒãƒ¼ãƒˆã™ã‚‹
 
 
 
@@ -23,18 +23,18 @@ var wsFunc = new Object();
 
 
     w.xywh = function (x, y, w, h) {
-        //—áŠOOK
+        //ä¾‹å¤–OK
         if (typeof x == "number" && typeof y == "number" && typeof w == "number" && typeof h == "number") {
             return [x, y, x + w, y + h];
         }
-        alert("À•W‚É”ˆÈŠO‚ª•´‚ê‚ñ‚Å‚¢‚é");
+        alert("åº§æ¨™ã«æ•°ä»¥å¤–ãŒç´›ã‚Œè¾¼ã‚“ã§ã„ã‚‹");
     }
 
 
 
     w.colorNumCode = function (codeOrArray) {
 
-        //—áŠOOK
+        //ä¾‹å¤–OK
         if (Array.isArray(codeOrArray)) {
             var rtn = "#"
             for (var i = 0; i < codeOrArray.length; i++) {
@@ -49,15 +49,15 @@ var wsFunc = new Object();
             }
             return rtn;
         }
-        alert("“à•”ƒGƒ‰[FFw’è‚ª•s³");
+        alert("å†…éƒ¨ã‚¨ãƒ©ãƒ¼ï¼šè‰²æŒ‡å®šãŒä¸æ­£");
 
     }
 
 
 
-    //  Set1¾Set2 
+    //  Set1âˆªSet2 
     w.setInter = function (set1, set2) {
-        //—áŠOOK
+        //ä¾‹å¤–OK
         if (!Array.isArray(set1) || !Array.isArray(set2)) { return []; }
         var rtn = [];
         for (var i = 0; i < set1.length; i++) {
@@ -72,12 +72,12 @@ var wsFunc = new Object();
 
 
 
-    //  Set1_Set2
+    //  Set1ï¼¼Set2
     w.setDiff = function (set1, set2) {
 
-        //—áŠOOK
+        //ä¾‹å¤–OK
         if (!Array.isArray(set1) || !Array.isArray(set2)) { return []; }
-        //”z—ñ‚ÌƒRƒs[
+        //é…åˆ—ã®ã‚³ãƒ”ãƒ¼
         var rtn = set1.slice();
         for (var i = 0; i < set2.length; i++) {
             var index = rtn.indexOf(set2[i]);
@@ -90,7 +90,7 @@ var wsFunc = new Object();
 
 
 
-    //–¢g—p
+    //æœªä½¿ç”¨
     w.peekee = function (value, rate) {
         value += rate;
         if (value < 0) {
@@ -103,7 +103,7 @@ var wsFunc = new Object();
 
 
 
-    //–¢g—p
+    //æœªä½¿ç”¨
     w.peekeeSmooth = function (value, rate) {
         if (rate > 0) {
             value = 1 - (1 - value) * rate;
@@ -124,7 +124,7 @@ var wsFunc = new Object();
             r = r[0];
         }
 
-        //‹«ŠE’l•ÛŒì
+        //å¢ƒç•Œå€¤ä¿è­·
         r = r > 0.9999999999 ? 0.9999999999 : r;
         g = g > 0.9999999999 ? 0.9999999999 : g;
         b = b > 0.9999999999 ? 0.9999999999 : b;
@@ -157,7 +157,7 @@ var wsFunc = new Object();
 
         var rtn = [Math.abs(h), Math.abs(l), Math.abs(s)]
 
-        //‹«ŠE’l•ÛŒì
+        //å¢ƒç•Œå€¤ä¿è­·
         for (var i = 0; i < rtn.length; i++) {
             rtn[i] = rtn[i] > 0.9999999999 ? 0.9999999999 : rtn[i];
             rtn[i] = rtn[i] < 0.0000000001 ? 0.0000000001 : rtn[i];
@@ -177,7 +177,7 @@ var wsFunc = new Object();
         }
 
 
-        //‹«ŠE’l•ÛŒì
+        //å¢ƒç•Œå€¤ä¿è­·
         s = s > 0.9999999999 ? 0.9999999999 : s;
         l = l > 0.9999999999 ? 0.9999999999 : l;
         h = h > 0.9999999999 ? 0.9999999999 : h;
@@ -215,7 +215,7 @@ var wsFunc = new Object();
 
 
 
-        //‹«ŠE’l•ÛŒì
+        //å¢ƒç•Œå€¤ä¿è­·
         for (var i = 0; i < rtn.length; i++) {
             rtn[i] = rtn[i] > 0.9999999999 ? 0.9999999999 : rtn[i];
             rtn[i] = rtn[i] < 0.0000000001 ? 0.0000000001 : rtn[i];
