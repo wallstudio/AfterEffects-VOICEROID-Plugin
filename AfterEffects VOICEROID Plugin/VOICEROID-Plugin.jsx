@@ -1,4 +1,7 @@
-﻿
+﻿//機能ライブラリロード
+$.evalFile("Wall Studio Script/wsFunc.jsx");
+
+
 
 //共通設定
 
@@ -10,42 +13,14 @@ var previewSize = 200;
 
 //共有データ
 var standCfgStr = "";
-var monitoringFolders = (function () {
-    var rtn = new Array(maxNunChars);
-    for (var i = 0; i < maxNunChars; i++) {
-        rtn[i] = new Object();
-        rtn[i].path = "";
-        //monitaring()では.pathが無ければ素通りするから↓の初期化は参照ボタン.onClickに任せてもいい？
-        rtn[i].initFlg = false;
-        rtn[i].oldList = new Array();
-    }
-    return rtn;
-}());
+var monitoringFolders = wsFunc.repeat({path:"",initFlg:false,oldList:[]},maxNunChars);
 var monitoringCounter = 0;
 var taskID = 0;
 var communicationPreviewDialog = "";
 var standEnable = true;
-var colors = (function () {
-    var rtn = [];
-    for (var i = 0; i < maxNunChars; i++) {
-        rtn.push("#FFFFFF");
-    }
-    return rtn;
-}());
-var trans = (function () {
-    var rtn = [];
-    for (var i = 0; i < maxNunChars; i++) {
-        rtn[i] = [1100, 500, 600, 600];
-    }
-    return rtn;
-}());
-var monitoringFoldersEnable = (function () {
-    var rtn = [];
-    for (var i = 0; i < maxNunChars; i++) {
-        rtn[i] = true;
-    }
-    return rtn;
-}());
+var colors = wsFunc.repeat("#FFFFFF", maxNunChars);
+var trans = wsFunc.repeat([1100, 500, 600, 600], maxNunChars);
+var monitoringFoldersEnable = wsFunc.repeat(true, maxNunChars);
 
 //main
 app.cancelTask(taskID);
