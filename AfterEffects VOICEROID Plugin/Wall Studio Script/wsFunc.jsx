@@ -3,36 +3,30 @@
 
 
 
-var wsFunc = new Object();
+var wsFunc ={
 
-(function () {
-
-
-    var w = wsFunc;
-
-
-    w.repeat = function (obj, length) {
+    repeat (obj, length) {
         if (typeof obj == "undefined") { obj = 0; }
         var rtn = [];
         for (var i = 0; i < length; i++) {
             rtn.push(obj);
         }
         return rtn;
-    }
+    },
 
 
 
-    w.xywh = function (x, y, w, h) {
+    xywh (x, y, w, h) {
         //例外OK
         if (typeof x == "number" && typeof y == "number" && typeof w == "number" && typeof h == "number") {
             return [x, y, x + w, y + h];
         }
         alert("座標に数以外が紛れ込んでいる");
-    }
+    },
 
 
 
-    w.colorNumCode = function (codeOrArray) {
+    colorNumCode (codeOrArray) {
 
         //例外OK
         if (Array.isArray(codeOrArray)) {
@@ -51,12 +45,12 @@ var wsFunc = new Object();
         }
         alert("内部エラー：色指定が不正");
 
-    }
+    },
 
 
 
     //  Set1∪Set2 
-    w.setInter = function (set1, set2) {
+    setInter (set1, set2) {
         //例外OK
         if (!Array.isArray(set1) || !Array.isArray(set2)) { return []; }
         var rtn = [];
@@ -68,12 +62,12 @@ var wsFunc = new Object();
             }
         }
         return rtn;
-    }
+    },
 
 
 
     //  Set1＼Set2
-    w.setDiff = function (set1, set2) {
+    setDif (set1, set2) {
 
         //例外OK
         if (!Array.isArray(set1) || !Array.isArray(set2)) { return []; }
@@ -86,12 +80,12 @@ var wsFunc = new Object();
             }
         }
         return rtn;
-    }
+    },
 
 
 
     //未使用
-    w.peekee = function (value, rate) {
+    peekee (value, rate) {
         value += rate;
         if (value < 0) {
             value = 0;
@@ -99,23 +93,23 @@ var wsFunc = new Object();
             value = 1;
         }
         return value;
-    }
+    },
 
 
 
     //未使用
-    w.peekeeSmooth = function (value, rate) {
+    peekeeSmooth (value, rate) {
         if (rate > 0) {
             value = 1 - (1 - value) * rate;
         } else {
             value = -value * rate;
         }
         return value;
-    }
+    },
 
 
 
-    w.toHLS = function (r, g, b) {
+    toHLS (r, g, b) {
 
 
         if (Array.isArray(r)) {
@@ -164,11 +158,11 @@ var wsFunc = new Object();
         }
 
         return rtn;
-    }
+    },
 
 
 
-    w.toRGB = function (h, l, s) {
+    toRGB (h, l, s) {
 
         if (Array.isArray(h)) {
             s = h[2];
@@ -224,6 +218,4 @@ var wsFunc = new Object();
         return rtn;
     }
 
-
-
-}());
+}
