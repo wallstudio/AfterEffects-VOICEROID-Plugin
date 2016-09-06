@@ -27,7 +27,7 @@ app.cancelTask(taskID);
 var curentFolder = Folder.current.toString(); //ケツスラッシュはついてない
 thumbnailFolderInit();
 var mainPanel = createUI(this);
-monitoring();
+lancherTaskID = app.scheduleTask("monitoring()", monitoringInterval, true);
 
 
 
@@ -72,7 +72,7 @@ function createUI(thisObj) {
     //デバッグ→緊急停止ボタン（パネルを閉じてもプロセスチェーンが残るのでこれで殺してから閉じてもらうき）
     var stopButton = mainPanel.add("button", wsFunc.xywh(102, 30, 20, 20), "×");
     stopButton.onClick = function () {
-        app.cancelTask(taskID);
+        app.cancelTask(lancherTaskID);
         writeLn("Cancel " + taskID + "(" + monitoringCounter + ")");
         //押しても消えないが内部オブジェクトは消えるようで、2回押すとエラーになるので無効
         //mainPanel.close();
@@ -437,9 +437,11 @@ function monitoring() {
 
     }
 
-    taskID = app.scheduleTask("monitoring()", monitoringInterval, false);
+    //taskID = app.scheduleTask("monitoring()", monitoringInterval, false);
     writeLn("監視中(" + monitoringCounter + ")");
 }
+
+
 
 
 /*////////////////////////////////////////////////////////////
