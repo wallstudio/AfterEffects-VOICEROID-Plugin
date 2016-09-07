@@ -1,8 +1,32 @@
 {
     "chars":[
-        {
-            "number":0
-            
+      {
+
+        "general": {
+          "Enable": true,
+          "number": 0,
+          "name": "Œ‹ŒŽ‚ä‚©‚è",
+          "memo": "‚©‚í‚¢‚¢",
+          "monitoringFolder": "/d/niconico/voice/yukari"
+        },
+
+        "subtitles": {
+          "color": "#996699",
+          "x": 0.5,
+          "y": 0.7,
+          "font": "MeyrioUI",
+          "size": 50
+        },
+
+        "stand": {
+          "x": 0.8,
+          "y": 0.6,
+          "angle": 0,
+          "trans": 1,
+          "size": 1000,
+          "imageFolder": "/d/niconico/stand/yukari"
         }
+
+      }
     ]
 }
