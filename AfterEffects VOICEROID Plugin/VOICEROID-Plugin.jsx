@@ -27,7 +27,7 @@ app.cancelTask(taskID);
 var curentFolder = Folder.current.toString(); //ケツスラッシュはついてない
 thumbnailFolderInit();
 var mainPanel = createUI(this);
-lancherTaskID = app.scheduleTask("monitoring()", monitoringInterval, true);
+launcherTaskID = app.scheduleTask("monitoring()", monitoringInterval, true);
 
 
 
@@ -72,7 +72,7 @@ function createUI(thisObj) {
     //デバッグ→緊急停止ボタン（パネルを閉じてもプロセスチェーンが残るのでこれで殺してから閉じてもらうき）
     var stopButton = mainPanel.add("button", wsFunc.xywh(102, 30, 20, 20), "×");
     stopButton.onClick = function () {
-        app.cancelTask(lancherTaskID);
+        app.cancelTask(launcherTaskID);
         writeLn("Cancel " + taskID + "(" + monitoringCounter + ")");
         //押しても消えないが内部オブジェクトは消えるようで、2回押すとエラーになるので無効
         //mainPanel.close();
@@ -383,6 +383,105 @@ function exportStandCfg(chars, intraMem) {
     }
 }
 
+
+//新UI
+
+
+function createUIPallete() {
+
+    //描画設定
+    var pallete = new Window("window", "", wsFunc.xywh(50, 50, 210, 500));
+
+    pallete.monitoringLabel = pallete.add("statictext", wsFunc.xywh(45, 5, 50, 20), "監視");
+    pallete.monitoringONButton = pallete.add("button", wsFunc.xywh(5, 25, 50, 20), "ON");
+    pallete.monitoringOFFButton = pallete.add("button", wsFunc.xywh(60, 25, 50, 20), "OFF");
+
+    pallete.quickLoadButton = pallete.add("button", wsFunc.xywh(5, 60, 50, 20), "Qロード");
+    pallete.configButton = pallete.add("button", wsFunc.xywh(60, 60, 50, 20), "設定");
+    pallete.loadButton = pallete.add("button", wsFunc.xywh(5, 85, 50, 20), "ロード");
+    pallete.saveButton = pallete.add("button", wsFunc.xywh(60, 85, 50, 20), "セーブ");
+
+    pallete.yukarinIcon = pallete.add("image", wsFunc.xywh(120, 20, 75, 80), new File("C:\\Program Files\\Adobe\\Adobe After Effects CC 2015.3\\Support Files\\Scripts\\ScriptUI Panels\\Wall Studio Script\\yuka.png"));
+
+
+    //ロジック
+    pallete.monitoringONButton.onClick = function () {
+        this.activ = true;
+        this.parent.monitoringONButton = false;
+        launcherTaskID = app.scheduleTask("monitoring()", monitoringInterval, true);
+    };
+    pallete.monitoringOFFButton.onClick = function () {
+        this.parent.monitoringOFFButton = false;
+        app.cancelTask(launcherTaskID);
+    };
+
+    pallete.configButton.onClick = function () {
+        createUIConfig();
+    }
+
+
+
+    return pallete;
+}
+
+
+function createUIConfig() {
+
+    var config = new Window("window", "設定", wsFunc.xywh(200, 150, 1210, 710));
+    config.charGroup = [];
+    for (var i = 0; i < 6; i++) {
+        config.charGroup[i] = config.add("panel", wsFunc.xywh(610 * (i % 2), 235 * Math.floor(i / 2), 600, 500));
+        var ccg = config.charGroup[i];
+        ccg.label = ccg.add("statictext", wsFunc.xywh(0, 0, 100, 20), "キャラ" + (i+1));
+        ccg.enable = ccg.add("checkbox", wsFunc.xywh(45, 3, 20, 20));
+
+        ccg.general = ccg.add("panel", wsFunc.xywh(0, 20, 200, 220));
+        ccg.general.label = ccg.general.add("statictext", wsFunc.xywh(5, 5, 300, 20), "一般");
+        ccg.general.nameLabel = ccg.general.add("statictext", wsFunc.xywh(15, 50, 300, 20), "   名前");
+        ccg.general.name = ccg.general.add("edittext", wsFunc.xywh(90, 50, 80, 20), "NAME");
+        ccg.general.memoLabel = ccg.general.add("statictext", wsFunc.xywh(18, 75, 100, 20), "   メモ");
+        ccg.general.memo = ccg.general.add("edittext", wsFunc.xywh(90, 75, 80, 20), "MEMO");
+        ccg.general.monitoringFolderLabel = ccg.general.add("statictext", wsFunc.xywh(15, 100, 300, 20), "監視ﾌｫﾙﾀﾞ");
+        ccg.general.monitoringFolder = ccg.general.add("edittext", wsFunc.xywh(20, 120, 110, 20), "FOLDER");
+        ccg.general.monitoringFolderButtun = ccg.general.add("button", wsFunc.xywh(133, 120, 50, 20), "参照");
+
+        ccg.subtitles = ccg.add("panel", wsFunc.xywh(200, 20, 200, 220));
+        ccg.subtitles.label = ccg.subtitles.add("statictext", wsFunc.xywh(5, 5, 300, 20), "字幕");
+        ccg.subtitles.enable = ccg.subtitles.add("checkbox", wsFunc.xywh(40, 8, 20, 20))
+        ccg.subtitles.enableLabel = ccg.subtitles.add("statictext", wsFunc.xywh(15, 50, 300, 20), "    色");
+        ccg.subtitles.enable = ccg.subtitles.add("edittext", wsFunc.xywh(90, 50, 60, 20),"#FFFFFF");
+        ccg.subtitles.nameLabel = ccg.subtitles.add("statictext", wsFunc.xywh(10, 75, 300, 20), "水平位置0~1");
+        ccg.subtitles.name = ccg.subtitles.add("edittext", wsFunc.xywh(90, 75, 60, 20), "X");
+        ccg.subtitles.memoLabel = ccg.subtitles.add("statictext", wsFunc.xywh(10, 100, 100, 20), "垂直位置0~1");
+        ccg.subtitles.memo = ccg.subtitles.add("edittext", wsFunc.xywh(90, 100, 60, 20), "Y");
+        ccg.subtitles.monitoringFolderLabel = ccg.subtitles.add("statictext", wsFunc.xywh(15, 125, 300, 20), "  サイズ");
+        ccg.subtitles.monitoringFolder = ccg.subtitles.add("edittext", wsFunc.xywh(90, 125, 60, 20), "SIZE");
+        ccg.subtitles.monitoringFolderLabel = ccg.subtitles.add("statictext", wsFunc.xywh(15, 150, 300, 20), " フォント");
+        ccg.subtitles.monitoringFolder = ccg.subtitles.add("edittext", wsFunc.xywh(90, 150, 100, 20), "FONT");
+
+
+        ccg.stand = ccg.add("panel", wsFunc.xywh(400, 20, 200, 220));
+        ccg.stand.label = ccg.stand.add("statictext", wsFunc.xywh(5, 5, 300, 20), "立絵");
+        ccg.stand.enable = ccg.stand.add("checkbox", wsFunc.xywh(40, 8, 20, 20))
+        ccg.stand.nameLabel = ccg.stand.add("statictext", wsFunc.xywh(10, 50, 300, 20), "水平位置0~1");
+        ccg.stand.name = ccg.stand.add("edittext", wsFunc.xywh(90, 50, 60, 20), "X");
+        ccg.stand.memoLabel = ccg.stand.add("statictext", wsFunc.xywh(10, 75, 100, 20), "垂直位置0~1");
+        ccg.stand.memo = ccg.stand.add("edittext", wsFunc.xywh(90, 75, 60, 20), "Y");
+        ccg.stand.monitoringFolderLabel = ccg.stand.add("statictext", wsFunc.xywh(15, 100, 300, 20), " サイズpx");
+        ccg.stand.monitoringFolder = ccg.stand.add("edittext", wsFunc.xywh(90, 100, 60, 20), "SIZE");
+        ccg.stand.monitoringFolderLabel = ccg.stand.add("statictext", wsFunc.xywh(15, 125, 300, 20), " 向き0~1");
+        ccg.stand.monitoringFolder = ccg.stand.add("edittext", wsFunc.xywh(90, 125, 60, 20), "ANGLE");
+        ccg.stand.monitoringFolderLabel = ccg.stand.add("statictext", wsFunc.xywh(15, 150, 300, 20), "監視ﾌｫﾙﾀﾞ");
+        ccg.stand.monitoringFolder = ccg.stand.add("edittext", wsFunc.xywh(20, 170, 110, 20), "FOLDER");
+        ccg.stand.monitoringFolderButtun = ccg.stand.add("button", wsFunc.xywh(133, 170, 50, 20), "参照");
+
+    }
+
+
+}
+
+
+function createUIPreview() { }
 
 
 /*////////////////////////////////////////////////////////////
