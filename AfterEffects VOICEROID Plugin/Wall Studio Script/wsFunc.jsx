@@ -260,7 +260,7 @@ var wsFunc ={
 
         var jsonFileObj = new File(path);
         if (!jsonFileObj.open("w")) {
-            alert("ファイルの書き込みエラーです(1)");
+            alert("JSONファイルの書き込みエラーです(1)");
             jsonFileObj.close();
             return;
         }
@@ -269,10 +269,46 @@ var wsFunc ={
         var status = jsonFileObj.write(jsonString);
         jsonFileObj.close();
         if (!status) {
-            alert("ファイルの書き込みエラーです(2)");
+            alert("JSONファイルの書き込みエラーです(2)");
         }
         return status;
-    }
+    },
 
+
+
+    getFilesSafty: function (path) {
+        //引数が無ければダイアログを出す
+        while (!path) {
+            var selectedFolderObj = Folder.selectDialog("フォルダを選んでください");
+            //キャンセルボタンが押されたとき
+            if (!selectedFolderObj) {
+                return;
+            }
+            path = selectedFolderObj.fsName;
+            selectedFolderObj.close();
+        }
+
+        var folderObj = new Folder(path);
+        if (!folderObj) {
+            alert("フォルダが開けません");
+            folderObj.close();
+            return;
+        }
+        
+        var fileObjs = folderObj.getFiles("*.png");
+        if (fileObjs.length < 1 || !fileObjs) {
+            alert("ファイルがありません");
+            return;
+        }
+        //ファイルのオープンチェック
+        for (var i = 0; i < fileObjs.length; i++) {
+            if (!fileObjs[i]) {
+                alert("読み込めないファイルがあります");
+                return;
+            }
+        }
+        
+        return fileObjs;
+    }
 
 }
