@@ -67,7 +67,7 @@ var wsFunc ={
 
 
     //  Set1＼Set2
-    setDif: function (set1, set2) {
+    setDiff: function (set1, set2) {
 
         //例外OK
         if (!Array.isArray(set1) || !Array.isArray(set2)) { return []; }

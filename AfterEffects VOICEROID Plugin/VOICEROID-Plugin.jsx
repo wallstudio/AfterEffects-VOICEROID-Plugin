@@ -40,6 +40,9 @@ launcherTaskID = app.scheduleTask("monitoring()", monitoringInterval, true);
 ////////////////////////////////////////////////////////////*/
 
 
+//旧UI
+
+
 function createUI(thisObj) {
 
     var mainPanel = (thisObj instanceof Panel) ? thisObj : new Window("window", "実況動画支援", wsFunc.xywh(200, 150, 210, 300));
