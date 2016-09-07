@@ -307,6 +307,31 @@ var wsFunc ={
         }
         
         return fileObjs;
+    },
+
+
+
+    exeSaftyLunch: function (appPath, src, exportFolder, size) {
+
+        var filename = src.match(/.+[\\\/](.+)(\.[^\.]+)$/)[1];
+        filename = ("000000000000" + Math.floor(Math.random() * 1000000000000)).slice(-12) + "_" + filename;
+
+        var reg1 = new RegExp("^/([a-z])");
+        var reg2 = new RegExp("^~");
+        var reg3 = new RegExp("/", "g");
+
+        var stdIn = "\"" + decodeURI(appPath).replace(reg1, "$1:").replace(reg2, "%homepath%").replace(reg3, "\\") + "\"";
+        stdIn += " \"" + decodeURI(src).replace(reg1, "$1:").replace(reg2, "%homepath%").replace(reg3, "\\") + "\"";    //第一：リソース
+        stdIn += " \"" + decodeURI(exportFolder).replace(reg1, "$1:").replace(reg2, "%homepath%").replace(reg3, "\\") + "\\" + decodeURI(filename) + ".png\"";    //第二：出力
+        stdIn += " " + size;    //第三：大きさ
+
+        var stdOut = system.callSystem(stdIn);
+        //例外OK
+        if (stdOut.match("prm_error") || !stdOut.match("Complete")) {
+            alert(stdOut);
+            return;
+        }
+        return exportFolder + "/" + filename + ".png";
     }
 
 }
