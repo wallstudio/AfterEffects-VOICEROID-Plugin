@@ -216,6 +216,63 @@ var wsFunc ={
         }
 
         return rtn;
+    },
+
+
+
+    importJsonFile : function (path){
+        //引数が無ければダイアログを出す
+        while (!path) {
+            var selectedFileObj = File.openDialog("JSONファイルを選んでください");
+            //キャンセルボタンが押されたとき
+            if (!selectedFileObj) {
+                return;
+            }
+            path = selectedFileObj.fsName;
+            selectedFileObj.close();
+        }
+
+        var jsonFileObj = new File(path);
+        if (!jsonFileObj.open("r")) {
+            alert("ファイルの読み込みエラーです");
+            jsonFileObj.close();
+            return;
+        }
+        var jsonString = jsonFileObj.read();
+        jsonFileObj.close();
+
+        return JSON.parse(jsonString);
+    },
+
+
+
+    exportJsonFile: function (jsonObj, path) {
+        //第2引数が無ければダイアログを出す
+        while (!path) {
+            var selectedFileObject = File.saveDialog("設定ファイルの保存先を決めてください", "*.js");
+            //キャンセルボタンが押されたとき
+            if (!selectedFileObject) {
+                return;
+            }
+            path = selectedFileObject.fsName;
+            selectedFileObject.close();
+        }
+
+        var jsonFileObj = new File(path);
+        if (!jsonFileObj.open("w")) {
+            alert("ファイルの書き込みエラーです(1)");
+            jsonFileObj.close();
+            return;
+        }
+        var jsonString = JSON.stringify(jsonObj);
+        
+        var status = jsonFileObj.write(jsonString);
+        jsonFileObj.close();
+        if (!status) {
+            alert("ファイルの書き込みエラーです(2)");
+        }
+        return status;
     }
+
 
 }

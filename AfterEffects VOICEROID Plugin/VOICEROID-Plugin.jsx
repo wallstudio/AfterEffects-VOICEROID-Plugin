@@ -394,6 +394,8 @@ function exportStandCfg(chars, intraMem) {
 /////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////*/
 
+
+
 function monitoring() {
 
     monitoringCounter++;
@@ -440,7 +442,6 @@ function monitoring() {
     //taskID = app.scheduleTask("monitoring()", monitoringInterval, false);
     writeLn("監視中(" + monitoringCounter + ")");
 }
-
 
 
 
