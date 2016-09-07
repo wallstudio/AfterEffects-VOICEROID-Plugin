@@ -285,13 +285,11 @@ var wsFunc ={
                 return;
             }
             path = selectedFolderObj.fsName;
-            selectedFolderObj.close();
         }
 
         var folderObj = new Folder(path);
         if (!folderObj) {
             alert("フォルダが開けません");
-            folderObj.close();
             return;
         }
         
