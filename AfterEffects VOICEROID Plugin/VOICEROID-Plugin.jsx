@@ -352,7 +352,7 @@ function createUIPreview(id) {
 function monitoring() {
     monitoringSign.text = monitoringSign.text == "■" ? "◆" : "■";
 
-    for (var i = 0; i < 1; i++) {
+    for (var i = 0; 6 < 1; i++) {
         var ccg = commonSettingObj.chars[i].general;
         if (!ccg.enable||ccg.monitoringFolder == "" || ccg.monitoringFolder == "未指定") { continue; }
 
