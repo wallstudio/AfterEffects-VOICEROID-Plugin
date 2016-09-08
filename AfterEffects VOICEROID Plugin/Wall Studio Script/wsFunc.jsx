@@ -370,6 +370,37 @@ var wsFunc ={
                 return -1;
             }
         });
+    },
+
+
+
+    openFolderRichDialog: function (appPath, defaultPath) {
+
+        if (!defaultPath) {
+            defaultPath = Folder.startup;
+        }
+
+        var reg1 = new RegExp("^/([a-z])");
+        var reg2 = new RegExp("^~");
+        var reg3 = new RegExp("/", "g");
+
+        var stdIn = "\"" + decodeURI(appPath).replace(reg1, "$1:").replace(reg2, "%homepath%").replace(reg3, "\\") + "\"";
+        stdIn += " \"" + decodeURI(defaultPath).replace(reg1, "$1:").replace(reg2, "%homepath%").replace(reg3, "\\") + "\"";    //第一：default
+
+        var stdOut = system.callSystem(stdIn);
+
+        var rtn = "";
+        var pathFilePath = appPath.replace(/[^\\^\/]+$/, "communicationFolderPath");
+        var pathFileObj = new File(pathFilePath);
+        if (pathFileObj.open("r")) {
+            rtn = pathFileObj.read();
+        } else {
+            rtn = null;
+        }
+        pathFileObj.close();
+        pathFileObj.remove();
+
+        return rtn;
     }
 
 }

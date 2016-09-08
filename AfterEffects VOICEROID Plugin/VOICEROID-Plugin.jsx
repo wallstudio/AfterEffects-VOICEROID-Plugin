@@ -76,6 +76,7 @@ function createUIPallete(thisObj) {
     }
     pallete.loadButton.onClick = function () {
         commonSettingObj = wsFunc.importJsonFile();
+        wsFunc.exportJsonFile(commonSettingObj, autoSavePath);
     }
     pallete.saveButton.onClick = function () {
         wsFunc.exportJsonFile(commonSettingObj);
@@ -110,6 +111,7 @@ function createUIConfig() {
         var ccg = config.charGroup[i];
         ccg.label = ccg.add("statictext", wsFunc.xywh(0, 0, 100, 20), "キャラ" + (i+1));
         ccg.enable = ccg.add("checkbox", wsFunc.xywh(45, 3, 20, 20));
+        ccg.testButton = ccg.add("button", wsFunc.xywh(540, 0, 50, 20), "テスト");
 
         ccg.general = ccg.add("panel", wsFunc.xywh(0, 20, 200, 220));
         ccg.general.label = ccg.general.add("statictext", wsFunc.xywh(5, 5, 300, 20), "一般");
@@ -238,22 +240,26 @@ function createUIConfig() {
         ccg.stand.imageFolder.onChange = config.rewrite;
 
         //ボタン
+        ccg.testButton.id = i;
+        ccg.testButton.onClick = function () {
+            createLayer(programFolder+"/test.wav",this.id);
+        }
         ccg.general.monitoringFolderButton.onClick = function () {
-            var folderObj = Folder.selectDialog("フォルダを選んでください");;
+            var folderObj = wsFunc.openFolderRichDialog(programFolder + "/rd.exe", "");
             if (!folderObj) {
                 //キャンセルされた
                 return;
             }
-            this.parent.monitoringFolder.text = folderObj.toString();
+            this.parent.monitoringFolder.text = decodeURI(folderObj.toString());
             this.parent.monitoringFolder.onChange();
         }
         ccg.stand.imageFolderButton.onClick = function () {
-            var folderObj = Folder.selectDialog("フォルダを選んでください");;
+            var folderObj = wsFunc.openFolderRichDialog(programFolder + "/rd.exe", "");
             if (!folderObj) {
                 //キャンセルされた
                 return;
             }
-            this.parent.imageFolder.text = folderObj.toString();
+            this.parent.imageFolder.text = decodeURI(folderObj.toString());
             this.parent.imageFolder.onChange();
         }
 
