@@ -1,9 +1,9 @@
 ﻿
 programFolder = "/c/Program Files/Adobe/Adobe After Effects CC 2015.3/Support Files/Scripts/ScriptUI Panels/Wall Studio Script"
-
 $.evalFile("Wall Studio Script/wsFunc.jsx");
-
-commonSettingObj = wsFunc.importJsonFile(programFolder + "/sample_setting.json");
+//JSONクラスのロードに先行してしまう？
+commonSettingObj = null;
+//commonSettingObj = wsFunc.importJsonFile(programFolder + "/sample_setting.json");
 autoSavePath = programFolder + "/autoSave_setting.json";
 
 //グローバル変数宣言
@@ -16,12 +16,16 @@ monitoringSign = null;
 oldList = wsFunc.repeat(null, 6);
 communicationPreviewDialog = null;
 
-
-
+//Main
+app.scheduleTask("preload()", 5000, false);
 mainPanel = createUIPallete(this);
 
 
-
+function preload() {
+    commonSettingObj = wsFunc.importJsonFile(programFolder + "/sample_setting.json");
+    mainPanel.visibleSwiche(true);
+    writeLn("VOICEROID Plugin 初期化完了");
+}
 /*////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////
 
@@ -39,6 +43,7 @@ function createUIPallete(thisObj) {
     //描画設定
     var pallete =  (thisObj instanceof Panel) ? thisObj : new Window("window", "", wsFunc.xywh(50, 50, 210, 500));
 
+    pallete.loadingLabel = pallete.add("statictext", wsFunc.xywh(15, 15, 100, 20), "初期化中…");
     pallete.monitoringLabel = pallete.add("statictext", wsFunc.xywh(45, 5, 50, 20), "監視");
     monitoringSign = pallete.monitoringSign = pallete.add("statictext", wsFunc.xywh(30, 5, 50, 20), "■");
     pallete.monitoringONButton = pallete.add("button", wsFunc.xywh(5, 25, 50, 20), "ON");
@@ -49,7 +54,7 @@ function createUIPallete(thisObj) {
     pallete.loadButton = pallete.add("button", wsFunc.xywh(5, 85, 50, 20), "ロード");
     pallete.saveButton = pallete.add("button", wsFunc.xywh(60, 85, 50, 20), "セーブ");
 
-    pallete.yukarinIcon = pallete.add("image", wsFunc.xywh(120, 20, 75, 80), new File(programFolder + "yuka.png"));
+    pallete.yukarinIcon = pallete.add("image", wsFunc.xywh(120, 20, 75, 80), new File(programFolder + "/yuka.png"));
 
 
     //ロジック
@@ -75,6 +80,21 @@ function createUIPallete(thisObj) {
     pallete.saveButton.onClick = function () {
         wsFunc.exportJsonFile(commonSettingObj);
     }
+
+    //初期化中は隠す
+    pallete.visibleSwiche = function (enable) {
+        this.loadingLabel.visible = !enable;
+        this.monitoringLabel.visible = enable;
+        monitoringSign.visible = enable;
+        this.monitoringONButton.visible = enable;
+        this.monitoringOFFButton.visible = enable;
+        this.quickLoadButton.visible = enable;
+        this.configButton.visible = enable;
+        this.loadButton.visible = enable;
+        this.saveButton.visible = enable;
+        this.yukarinIcon.visible = enable;
+    }
+    pallete.visibleSwiche(false);
 
     return pallete;
 }
@@ -268,8 +288,7 @@ function createUIPreview(id) {
         var ps = 200;
         preview.cells[i] = preview.pages[Math.floor(i / 15)].add("panel", wsFunc.xywh((i % 15 % 5) * ps, Math.floor((i % 15) / 5) * ps, ps, ps));
         preview.cells[i].label = preview.cells[i].add("statictext", wsFunc.xywh(0, 0, 40, 20), "#" + (i + 1));
-        var defaultImage = new File(programFolder + "/notSelectedIcon.png");
-        preview.cells[i].image = preview.cells[i].add("iconbutton",wsFunc.xywh(0,0,ps,ps),defaultImage);
+        preview.cells[i].image = preview.cells[i].add("iconbutton",wsFunc.xywh(0,0,ps,ps));
     }
 
     //初期データの読み取り
