@@ -376,7 +376,11 @@ function createLayer(voicePath, id) {
     var compW = targetComp.width;
     var compH = targetComp.height;
 
-
+    //音声の保存の時間稼ぎに
+    if (cc.stand.enable) {
+        communicationPreviewDialog = null;
+        previewDialog = createUIPreview(id);
+    }
 
     //音声
     var fileObj = new File(voicePath);
@@ -389,11 +393,9 @@ function createLayer(voicePath, id) {
     var audioLayer = targetComp.layers.add(audio);
     audioLayer.startTime = nowTime;
 
-
     //立ち絵
+    
     if (cc.stand.enable) {
-        communicationPreviewDialog = null;
-        previewDialog = createUIPreview(id);
         var standPath = communicationPreviewDialog;
         if (standPath) {
             var standFileObj = new File(standPath);
@@ -414,7 +416,7 @@ function createLayer(voicePath, id) {
             } else { alert("立ち絵ファイルが開けません"); }
         }
     }
-
+    
 
     //字幕
     if (cc.subtitles.enable) {
@@ -453,18 +455,5 @@ function createLayer(voicePath, id) {
         textLayer("position").setValue([compW * cc.subtitles.x,compH* cc.subtitles.y]);
         textLayer("Opacity").expression = "transform.opacity = easeIn(time, inPoint, inPoint + 0.10, 0, 100) * ease(time, outPoint - 0.15, outPoint, 100, 0) / 100;";
     }
-    
-
-
-    
-
-
-
-    //字幕追加
-
-
-
-
-
 }
 
