@@ -223,7 +223,7 @@ var wsFunc ={
     importJsonFile : function (path){
         //引数が無ければダイアログを出す
         while (!path) {
-            var selectedFileObj = File.openDialog("JSONファイルを選んでください");
+            var selectedFileObj = File.openDialog("JSONファイルを選んでください", "*.json");
             //キャンセルボタンが押されたとき
             if (!selectedFileObj) {
                 return;
@@ -249,7 +249,7 @@ var wsFunc ={
     exportJsonFile: function (jsonObj, path) {
         //第2引数が無ければダイアログを出す
         while (!path) {
-            var selectedFileObject = File.saveDialog("設定ファイルの保存先を決めてください", "*.js");
+            var selectedFileObject = File.saveDialog("設定ファイルの保存先を決めてください", "*.json");
             //キャンセルボタンが押されたとき
             if (!selectedFileObject) {
                 return;
@@ -332,6 +332,44 @@ var wsFunc ={
             return;
         }
         return exportFolder + "/" + filename + ".png";
+    },
+
+
+
+    imageFromCash200: function (filePath, cashAddressFilePath) {
+        var jsonObj = this.importJsonFile(cashAddressFilePath);
+        var addressList = jsonObj.list;
+        //探す
+        for (var i = 0; i < addressList.length; i++) {
+            if (addressList[i].src == filePath) {
+                return addressList[i].thumbnail;
+            }
+        }
+        //見つからなかった
+        var thumnbnailPath = this.exeSaftyLunch(
+            "C:\\Program Files\\Adobe\\Adobe After Effects CC 2015.3\\Support Files\\Scripts\\ScriptUI Panels\\Wall Studio Script\\ri.exe",
+            filePath,
+            "C:\\Program Files\\Adobe\\Adobe After Effects CC 2015.3\\Support Files\\Scripts\\ScriptUI Panels\\Wall Studio Script\\thumbnail200Cash",
+            200);
+        addressList.push({src: filePath, thumbnail:thumnbnailPath});
+        this.exportJsonFile(jsonObj,cashAddressFilePath);
+        return thumnbnailPath;
+    },
+
+
+
+    sortFileObj: function(array){
+        if (!Array.isArray(array)) {
+            alert("配列以外はソートできません");
+            return array;
+        }
+        array.sort(function (a, b) {
+            if (a.fsName > b.fsName) {
+                return 1;
+            } else {
+                return -1;
+            }
+        });
     }
 
 }

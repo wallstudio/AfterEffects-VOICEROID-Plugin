@@ -1,0 +1,190 @@
+{
+    "chars":[
+      {
+
+        "general": {
+          "enable": true,
+          "number": 0,
+          "name": "結月ゆかり",
+          "memo": "かわいい",
+          "monitoringFolder": "/d/niconico/voice/yukari"
+        },
+
+        "subtitles": {
+          "enable": true,
+          "color": "#996699",
+          "x": 0.5,
+          "y": 0.7,
+          "font": "MeyrioUI",
+          "size": 50
+        },
+
+        "stand": {
+          "enable": true,
+          "mirror": false,
+          "x": 0.8,
+          "y": 0.6,
+          "angle": 0,
+          "trans": 1,
+          "size": 1000,
+          "imageFolder": "/d/niconico/stand/yukari"
+        }
+
+      },
+      {
+
+        "general": {
+          "enable": true,
+          "number": 1,
+          "name": "弦巻マキ",
+          "memo": "おおきい",
+          "monitoringFolder": "/d/niconico/voice/maki"
+        },
+
+        "subtitles": {
+          "enable": true,
+          "color": "#999966",
+          "x": 0.5,
+          "y": 0.7,
+          "font": "MeyrioUI",
+          "size": 50
+        },
+
+        "stand": {
+          "enable": true,
+          "mirror": false,
+          "x": 0.8,
+          "y": 0.6,
+          "angle": 0,
+          "trans": 1,
+          "size": 1000,
+          "imageFolder": "/d/niconico/stand/maki"
+        }
+
+      },
+      {
+
+        "general": {
+          "enable": true,
+          "number": 0,
+          "name": "東北ずん子",
+          "memo": "ずんだもち",
+          "monitoringFolder": "/d/niconico/voice/zunko"
+        },
+
+        "subtitles": {
+          "enable": true,
+          "color": "#669966",
+          "x": 0.5,
+          "y": 0.7,
+          "font": "MeyrioUI",
+          "size": 50
+        },
+
+        "stand": {
+          "enable": true,
+          "mirror": false,
+          "x": 0.8,
+          "y": 0.6,
+          "angle": 0,
+          "trans": 1,
+          "size": 1000,
+          "imageFolder": "/d/niconico/stand/zunko"
+        }
+
+      },
+      {
+
+        "general": {
+          "enable": true,
+          "number": 0,
+          "name": "琴葉茜",
+          "memo": "ｾﾔﾅｰ",
+          "monitoringFolder": "/d/niconico/voice/akane"
+        },
+
+        "subtitles": {
+          "enable": true,
+          "color": "#996666",
+          "x": 0.5,
+          "y": 0.7,
+          "font": "MeyrioUI",
+          "size": 50
+        },
+
+        "stand": {
+          "enable": true,
+          "mirror": false,
+          "x": 0.8,
+          "y": 0.6,
+          "angle": 0,
+          "trans": 1,
+          "size": 1000,
+          "imageFolder": "/d/niconico/stand/akane"
+        }
+
+      },
+      {
+
+        "general": {
+          "enable": true,
+          "number": 0,
+          "name": "琴葉葵",
+          "memo": "ﾀﾞﾖﾈｰ",
+          "monitoringFolder": "/d/niconico/voice/aoi"
+        },
+
+        "subtitles": {
+          "enable": true,
+          "color": "#669966",
+          "x": 0.5,
+          "y": 0.7,
+          "font": "MeyrioUI",
+          "size": 50
+        },
+
+        "stand": {
+          "enable": true,
+          "mirror": false,
+          "x": 0.8,
+          "y": 0.6,
+          "angle": 0,
+          "trans": 1,
+          "size": 1000,
+          "imageFolder": "/d/niconico/stand/aoi"
+        }
+
+      },
+      {
+
+        "general": {
+          "enable": true,
+          "number": 0,
+          "name": "ﾀｶﾊｼ",
+          "memo": "ｺｳ先生「なんでや」",
+          "monitoringFolder": "/d/niconico/voice/takahashi"
+        },
+
+        "subtitles": {
+          "enable": true,
+          "color": "#996666",
+          "x": 0.5,
+          "y": 0.7,
+          "font": "MeyrioUI",
+          "size": 50
+        },
+
+        "stand": {
+          "enable": true,
+          "mirror": false,
+          "x": 0.8,
+          "y": 0.6,
+          "angle": 0,
+          "trans": 1,
+          "size": 1000,
+          "imageFolder": "/d/niconico/stand/takahashi"
+        }
+
+      }
+    ]
+}
