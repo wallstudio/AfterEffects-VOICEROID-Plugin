@@ -1,6 +1,7 @@
 ﻿//機能ライブラリロード
 $.evalFile("Wall Studio Script/wsFunc.jsx");
-
+var commonSettingObj = wsFunc.importJsonFile("C:\\Program Files\\Adobe\\Adobe After Effects CC 2015.3\\Support Files\\Scripts\\ScriptUI Panels\\Wall Studio Script\\sample_setting.json");
+var autoSavePath = "C:\\Program Files\\Adobe\\Adobe After Effects CC 2015.3\\Support Files\\Scripts\\ScriptUI Panels\\Wall Studio Script\\autoSave_setting.json";
 
 
 //共通設定
@@ -27,7 +28,7 @@ app.cancelTask(taskID);
 var curentFolder = Folder.current.toString(); //ケツスラッシュはついてない
 thumbnailFolderInit();
 var mainPanel = createUI(this);
-launcherTaskID = app.scheduleTask("monitoring()", monitoringInterval, true);
+//launcherTaskID = app.scheduleTask("monitoring()", monitoringInterval, true);
 
 
 
@@ -60,6 +61,7 @@ function createUI(thisObj) {
     var intervalField = mainPanel.add("edittext", wsFunc.xywh(5, 30, 50, 20), monitoringInterval);
     var updataIntervalbutton = mainPanel.add("button", wsFunc.xywh(60, 30, 40, 20), "更新");
     updataIntervalbutton.onClick = function () {
+        createUIPallete().show();
         var interval = parseInt(intervalField.text);
         //例外OK
         if (interval && interval > 0) {
@@ -419,9 +421,9 @@ function createUIPallete() {
     };
 
     pallete.configButton.onClick = function () {
-        createUIConfig();
+        uiConfigObj = createUIConfig();
+        uiConfigObj.show();
     }
-
 
 
     return pallete;
@@ -430,6 +432,7 @@ function createUIPallete() {
 
 function createUIConfig() {
 
+    //描画
     var config = new Window("window", "設定", wsFunc.xywh(200, 150, 1210, 710));
     config.charGroup = [];
     for (var i = 0; i < 6; i++) {
@@ -446,45 +449,207 @@ function createUIConfig() {
         ccg.general.memo = ccg.general.add("edittext", wsFunc.xywh(90, 75, 80, 20), "MEMO");
         ccg.general.monitoringFolderLabel = ccg.general.add("statictext", wsFunc.xywh(15, 100, 300, 20), "監視ﾌｫﾙﾀﾞ");
         ccg.general.monitoringFolder = ccg.general.add("edittext", wsFunc.xywh(20, 120, 110, 20), "FOLDER");
-        ccg.general.monitoringFolderButtun = ccg.general.add("button", wsFunc.xywh(133, 120, 50, 20), "参照");
+        ccg.general.monitoringFolderButton = ccg.general.add("button", wsFunc.xywh(133, 120, 50, 20), "参照");
 
         ccg.subtitles = ccg.add("panel", wsFunc.xywh(200, 20, 200, 220));
         ccg.subtitles.label = ccg.subtitles.add("statictext", wsFunc.xywh(5, 5, 300, 20), "字幕");
-        ccg.subtitles.enable = ccg.subtitles.add("checkbox", wsFunc.xywh(40, 8, 20, 20))
-        ccg.subtitles.enableLabel = ccg.subtitles.add("statictext", wsFunc.xywh(15, 50, 300, 20), "    色");
-        ccg.subtitles.enable = ccg.subtitles.add("edittext", wsFunc.xywh(90, 50, 60, 20),"#FFFFFF");
-        ccg.subtitles.nameLabel = ccg.subtitles.add("statictext", wsFunc.xywh(10, 75, 300, 20), "水平位置0~1");
-        ccg.subtitles.name = ccg.subtitles.add("edittext", wsFunc.xywh(90, 75, 60, 20), "X");
-        ccg.subtitles.memoLabel = ccg.subtitles.add("statictext", wsFunc.xywh(10, 100, 100, 20), "垂直位置0~1");
-        ccg.subtitles.memo = ccg.subtitles.add("edittext", wsFunc.xywh(90, 100, 60, 20), "Y");
-        ccg.subtitles.monitoringFolderLabel = ccg.subtitles.add("statictext", wsFunc.xywh(15, 125, 300, 20), "  サイズ");
-        ccg.subtitles.monitoringFolder = ccg.subtitles.add("edittext", wsFunc.xywh(90, 125, 60, 20), "SIZE");
-        ccg.subtitles.monitoringFolderLabel = ccg.subtitles.add("statictext", wsFunc.xywh(15, 150, 300, 20), " フォント");
-        ccg.subtitles.monitoringFolder = ccg.subtitles.add("edittext", wsFunc.xywh(90, 150, 100, 20), "FONT");
+        ccg.subtitles.enable = ccg.subtitles.add("checkbox", wsFunc.xywh(40, 8, 20, 20));
+        ccg.subtitles.colorLabel = ccg.subtitles.add("statictext", wsFunc.xywh(15, 50, 300, 20), "    色");
+        ccg.subtitles.color = ccg.subtitles.add("edittext", wsFunc.xywh(90, 50, 60, 20),"#FFFFFF");
+        ccg.subtitles.xLabel = ccg.subtitles.add("statictext", wsFunc.xywh(10, 75, 300, 20), "水平位置0~1");
+        ccg.subtitles.x = ccg.subtitles.add("edittext", wsFunc.xywh(90, 75, 60, 20), "X");
+        ccg.subtitles.yLabel = ccg.subtitles.add("statictext", wsFunc.xywh(10, 100, 100, 20), "垂直位置0~1");
+        ccg.subtitles.y = ccg.subtitles.add("edittext", wsFunc.xywh(90, 100, 60, 20), "Y");
+        ccg.subtitles.sizeLabel = ccg.subtitles.add("statictext", wsFunc.xywh(15, 125, 300, 20), "  サイズ");
+        ccg.subtitles.sizel = ccg.subtitles.add("edittext", wsFunc.xywh(90, 125, 60, 20), "SIZE");
+        ccg.subtitles.fontLabel = ccg.subtitles.add("statictext", wsFunc.xywh(15, 150, 300, 20), " フォント");
+        ccg.subtitles.font = ccg.subtitles.add("edittext", wsFunc.xywh(90, 150, 100, 20), "FONT");
 
 
         ccg.stand = ccg.add("panel", wsFunc.xywh(400, 20, 200, 220));
         ccg.stand.label = ccg.stand.add("statictext", wsFunc.xywh(5, 5, 300, 20), "立絵");
         ccg.stand.enable = ccg.stand.add("checkbox", wsFunc.xywh(40, 8, 20, 20))
-        ccg.stand.nameLabel = ccg.stand.add("statictext", wsFunc.xywh(10, 50, 300, 20), "水平位置0~1");
-        ccg.stand.name = ccg.stand.add("edittext", wsFunc.xywh(90, 50, 60, 20), "X");
-        ccg.stand.memoLabel = ccg.stand.add("statictext", wsFunc.xywh(10, 75, 100, 20), "垂直位置0~1");
-        ccg.stand.memo = ccg.stand.add("edittext", wsFunc.xywh(90, 75, 60, 20), "Y");
-        ccg.stand.monitoringFolderLabel = ccg.stand.add("statictext", wsFunc.xywh(15, 100, 300, 20), " サイズpx");
-        ccg.stand.monitoringFolder = ccg.stand.add("edittext", wsFunc.xywh(90, 100, 60, 20), "SIZE");
-        ccg.stand.monitoringFolderLabel = ccg.stand.add("statictext", wsFunc.xywh(15, 125, 300, 20), " 向き0~1");
-        ccg.stand.monitoringFolder = ccg.stand.add("edittext", wsFunc.xywh(90, 125, 60, 20), "ANGLE");
-        ccg.stand.monitoringFolderLabel = ccg.stand.add("statictext", wsFunc.xywh(15, 150, 300, 20), "監視ﾌｫﾙﾀﾞ");
-        ccg.stand.monitoringFolder = ccg.stand.add("edittext", wsFunc.xywh(20, 170, 110, 20), "FOLDER");
-        ccg.stand.monitoringFolderButtun = ccg.stand.add("button", wsFunc.xywh(133, 170, 50, 20), "参照");
+        ccg.stand.mirrorLabel = ccg.stand.add("statictext", wsFunc.xywh(95, 22, 300, 20), "反転");
+        ccg.stand.mirror = ccg.stand.add("checkbox", wsFunc.xywh(130, 25, 20, 20));
+        ccg.stand.xLabel = ccg.stand.add("statictext", wsFunc.xywh(10, 50, 300, 20), "水平位置0~1");
+        ccg.stand.x = ccg.stand.add("edittext", wsFunc.xywh(90, 50, 60, 20), "X");
+        ccg.stand.yLabel = ccg.stand.add("statictext", wsFunc.xywh(10, 75, 100, 20), "垂直位置0~1");
+        ccg.stand.y = ccg.stand.add("edittext", wsFunc.xywh(90, 75, 60, 20), "Y");
+        ccg.stand.sizeLabel = ccg.stand.add("statictext", wsFunc.xywh(15, 100, 300, 20), " サイズpx");
+        ccg.stand.sizel = ccg.stand.add("edittext", wsFunc.xywh(90, 100, 60, 20), "SIZE");
+        ccg.stand.angleLabel = ccg.stand.add("statictext", wsFunc.xywh(15, 125, 300, 20), " 向き0~1");
+        ccg.stand.angle = ccg.stand.add("edittext", wsFunc.xywh(90, 125, 60, 20), "ANGLE");
+        ccg.stand.imageFolderLabel = ccg.stand.add("statictext", wsFunc.xywh(15, 150, 300, 20), "立絵ﾌｫﾙﾀﾞ");
+        ccg.stand.imageFolder = ccg.stand.add("edittext", wsFunc.xywh(20, 170, 110, 20), "FOLDER");
+        ccg.stand.imageFolderButton = ccg.stand.add("button", wsFunc.xywh(133, 170, 50, 20), "参照");
+    }
+
+    //初期データの読み取り
+    config.reload = function () {
+        for (var i = 0; i < 6; i++) {
+            var ccg = config.charGroup[i];
+            var soc = commonSettingObj.chars[i];
+
+            ccg.enable.value = soc.general.enable;
+            ccg.general.name.text = soc.general.name;
+            ccg.general.memo.text = soc.general.memo;
+            ccg.general.monitoringFolder.text = soc.general.monitoringFolder;
+
+            ccg.subtitles.enable.value = soc.subtitles.enable;
+            ccg.subtitles.color.text = soc.subtitles.color;
+            ccg.subtitles.x.text = soc.subtitles.x;
+            ccg.subtitles.y.text = soc.subtitles.y;
+            ccg.subtitles.font.text = soc.subtitles.font;
+            ccg.subtitles.sizel.text = soc.subtitles.size;
+
+            ccg.stand.enable.value = soc.stand.enable;
+            ccg.stand.mirror.value = soc.stand.mirror;
+            ccg.stand.x.text = soc.stand.x;
+            ccg.stand.y.text = soc.stand.y;
+            ccg.stand.sizel.text = soc.stand.size;
+            ccg.stand.angle.text = soc.stand.angle;
+            ccg.stand.imageFolder.text = soc.stand.imageFolder;
+        }
+    }
+    config.reload();
+
+    //ロジック
+    config.rewrite = function () {
+        for (var i = 0; i < 6; i++) {
+            var ccg = config.charGroup[i];
+            var soc = commonSettingObj.chars[i];
+
+            soc.general.enable = ccg.enable.value;
+            soc.general.name = ccg.general.name.text;
+            soc.general.memo = ccg.general.memo.text;
+            soc.general.monitoringFolder = ccg.general.monitoringFolder.text;
+
+            soc.subtitles.enable = ccg.subtitles.enable.value;
+            soc.subtitles.color = ccg.subtitles.color.text;
+            soc.subtitles.x = parseFloat(ccg.subtitles.x.text) ? parseFloat(ccg.subtitles.x.text) : soc.subtitles.x;
+            soc.subtitles.y = parseFloat(ccg.subtitles.y.text) ? parseFloat(ccg.subtitles.y.text) : soc.subtitles.y;
+            soc.subtitles.font = parseFloat(ccg.subtitles.font.text) ? parseFloat(ccg.subtitles.font.text) : soc.subtitles.font;
+            soc.subtitles.size = parseFloat(ccg.subtitles.sizel.text) ? parseFloat(ccg.subtitles.sizel.text) : soc.subtitles.size;
+
+            soc.stand.enable = ccg.stand.enable.value;
+            soc.stand.mirror = ccg.stand.mirror.value;
+            soc.stand.x = parseFloat(ccg.stand.x.text) ? parseFloat(ccg.stand.x.text) : soc.stand.x;
+            soc.stand.y = parseFloat(ccg.stand.y.text) ? parseFloat(ccg.stand.y.text) : soc.stand.y;
+            soc.stand.size = parseFloat(ccg.stand.sizel.text) ? parseFloat(ccg.stand.sizel.text) : soc.stand.size;
+            soc.stand.x = parseFloat(ccg.stand.angle.text) ? parseFloat(ccg.stand.angle.text) : soc.stand.angle;
+            soc.stand.imageFolder = ccg.stand.imageFolder.text;
+        }
+        wsFunc.exportJsonFile(commonSettingObj,autoSavePath);
+    }
+
+    for (var i = 0; i < 6; i++) {
+        var ccg = config.charGroup[i];
+        var soc = commonSettingObj.chars[i];
+
+        //フィールド
+        ccg.enable.onClick = config.rewrite;
+        ccg.general.name.onChange = config.rewrite;
+        ccg.general.memo.onChange = config.rewrite;
+        ccg.general.monitoringFolder.onChange = config.rewrite;
+        ccg.subtitles.enable.onClick = config.rewrite;
+        ccg.subtitles.color.onChange = config.rewrite;
+        ccg.subtitles.x.onChange = config.rewrite;
+        ccg.subtitles.y.onChange = config.rewrite;
+        ccg.subtitles.font.onChange = config.rewrite;
+        ccg.subtitles.sizel.onChange = config.rewrite;
+        ccg.stand.enable.onClick = config.rewrite;
+        ccg.stand.mirror.onClick = config.rewrite;
+        ccg.stand.x.onChange = config.rewrite;
+        ccg.stand.y.onChange = config.rewrite;
+        ccg.stand.sizel.onChange = config.rewrite;
+        ccg.stand.angle.onChange = config.rewrite;
+        ccg.stand.imageFolder.onChange = config.rewrite;
+
+        //ボタン
+        ccg.general.monitoringFolderButton.onClick = function () {
+            var folderObj = Folder.selectDialog("フォルダを選んでください");;
+            if (!folderObj) {
+                //キャンセルされた
+                return;
+            }
+            this.parent.monitoringFolder.text = folderObj.toString();
+            this.parent.monitoringFolder.onChange();
+        }
+        ccg.stand.imageFolderButton.onClick = function () {
+            var folderObj = Folder.selectDialog("フォルダを選んでください");;
+            if (!folderObj) {
+                //キャンセルされた
+                return;
+            }
+            this.parent.imageFolder.text = folderObj.toString();
+            this.parent.imageFolder.onChange();
+        }
 
     }
 
 
+    return config;
+
 }
 
 
-function createUIPreview() { }
+function createUIPreview(id) {
+
+
+    //描画
+    var preview = new Window("window", "実況動画支援立ち絵選択", wsFunc.xywh(200, 150, 1020, 680));
+    preview.pageLabel = preview.add("statictext", wsFunc.xywh(30, 15, 100, 20), "Page.1");
+    preview.statusLabel1 = preview.add("statictext", wsFunc.xywh(480, 0, 600, 20), "STATUS");
+    preview.statusLabel2 = preview.add("statictext", wsFunc.xywh(480, 15, 600, 20), "STATUS");
+    preview.statusLabel3 = preview.add("statictext", wsFunc.xywh(480, 30, 600, 20), "STATUS");
+
+    preview.buttons = [];
+    preview.pages = [];
+    preview.cells = [];
+    for (var i = 0; i < 10; i++) {
+        preview.buttons[i] = preview.add("button", wsFunc.xywh(90 + 35 * i, 10, 30, 30), i+1);
+        preview.pages[i] = preview.add("panel", wsFunc.xywh(10, 50, 1000, 600));
+        preview.pages[i].visible = (i == 0);
+    }
+    
+    for (var i = 0; i < 150; i++) {
+        var ps = 200;
+        preview.cells[i] = preview.pages[Math.floor(i / 15)].add("panel", wsFunc.xywh((i % 15 % 5) * ps, Math.floor((i % 15) / 5) * ps, ps, ps));
+        preview.cells[i].label = preview.cells[i].add("statictext", wsFunc.xywh(0, 0, 40, 20), "#" + (i + 1));
+        var defaultImage = new File("C:\\Program Files\\Adobe\\Adobe After Effects CC 2015.3\\Support Files\\Scripts\\ScriptUI Panels\\Wall Studio Script\\notSelectedIcon.png");
+        preview.cells[i].image = preview.cells[i].add("iconbutton",wsFunc.xywh(0,0,ps,ps),defaultImage);
+    }
+
+    //初期データの読み取り
+    preview.reload = function (_id) {
+        var data = commonSettingObj.chars[_id];
+        preview.statusLabel1.text = "一般： " + data.general.name + "  (" + data.general.memo + ")    " + data.general.monitoringFolder;
+        preview.statusLabel2.text = "字幕： " + data.subtitles.color + "    " + data.subtitles.x + "x" + data.subtitles.y + "    大" + data.subtitles.size + "pt    " + data.subtitles.font;
+        preview.statusLabel3.text = "立絵： " + (data.stand.mirror ? "鏡    " : "    ") + data.stand.x + "x" + data.stand.y + "    大" + data.stand.size + "px    回" + data.stand.angle + "    透" + data.stand.trans + "    " + data.stand.imageFolder;
+
+        var imageFileObjs = wsFunc.getFilesSafty(data.stand.imageFolder);
+        if (imageFileObjs) {
+            for (var i = 0; i < imageFileObjs.length; i++) {
+                preview.cells[i].image.icon = imageFileObjs[i];
+            }
+        }
+    }
+    preview.reload(id);
+
+
+    //ロジック
+    for (var i = 0; i < 10; i++) {
+        preview.buttons[i].onClick = function () {
+            for (var j = 0; j < 10; j++) {
+                this.parent.buttons[j].active = false;
+                this.parent.pages[j].visible = false;
+            }
+            this.activ = true;
+            this.parent.pages[parseInt(this.text) - 1].visible = true;
+            this.parent.pageLabel.text = "Page." + this.text;
+        }
+    }
+}
 
 
 /*////////////////////////////////////////////////////////////
