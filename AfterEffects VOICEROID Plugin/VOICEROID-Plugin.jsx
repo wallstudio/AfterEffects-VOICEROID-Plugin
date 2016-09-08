@@ -1,13 +1,21 @@
-﻿//機能ライブラリロード
+﻿
+programFolder = "/c/Program Files/Adobe/Adobe After Effects CC 2015.3/Support Files/Scripts/ScriptUI Panels/Wall Studio Script"
+
 $.evalFile("Wall Studio Script/wsFunc.jsx");
-commonSettingObj = wsFunc.importJsonFile("C:\\Program Files\\Adobe\\Adobe After Effects CC 2015.3\\Support Files\\Scripts\\ScriptUI Panels\\Wall Studio Script\\sample_setting.json");
-autoSavePath = "C:\\Program Files\\Adobe\\Adobe After Effects CC 2015.3\\Support Files\\Scripts\\ScriptUI Panels\\Wall Studio Script\\autoSave_setting.json";
+
+commonSettingObj = wsFunc.importJsonFile(programFolder + "/sample_setting.json");
+autoSavePath = programFolder + "/autoSave_setting.json";
+
+//グローバル変数宣言
+mainPanel = null;
+uiConfigObj = null;
+previewDialog = null;
+
 taskId = null;
 monitoringSign = null;
 oldList = wsFunc.repeat(null, 6);
+communicationPreviewDialog = null;
 
-
-communicationPreviewDialog = "";
 
 
 mainPanel = createUIPallete(this);
@@ -41,7 +49,7 @@ function createUIPallete(thisObj) {
     pallete.loadButton = pallete.add("button", wsFunc.xywh(5, 85, 50, 20), "ロード");
     pallete.saveButton = pallete.add("button", wsFunc.xywh(60, 85, 50, 20), "セーブ");
 
-    pallete.yukarinIcon = pallete.add("image", wsFunc.xywh(120, 20, 75, 80), new File("C:\\Program Files\\Adobe\\Adobe After Effects CC 2015.3\\Support Files\\Scripts\\ScriptUI Panels\\Wall Studio Script\\yuka.png"));
+    pallete.yukarinIcon = pallete.add("image", wsFunc.xywh(120, 20, 75, 80), new File(programFolder + "yuka.png"));
 
 
     //ロジック
@@ -260,7 +268,7 @@ function createUIPreview(id) {
         var ps = 200;
         preview.cells[i] = preview.pages[Math.floor(i / 15)].add("panel", wsFunc.xywh((i % 15 % 5) * ps, Math.floor((i % 15) / 5) * ps, ps, ps));
         preview.cells[i].label = preview.cells[i].add("statictext", wsFunc.xywh(0, 0, 40, 20), "#" + (i + 1));
-        var defaultImage = new File("C:\\Program Files\\Adobe\\Adobe After Effects CC 2015.3\\Support Files\\Scripts\\ScriptUI Panels\\Wall Studio Script\\notSelectedIcon.png");
+        var defaultImage = new File(programFolder + "/notSelectedIcon.png");
         preview.cells[i].image = preview.cells[i].add("iconbutton",wsFunc.xywh(0,0,ps,ps),defaultImage);
     }
 
@@ -275,7 +283,7 @@ function createUIPreview(id) {
         wsFunc.sortFileObj(imageFileObjs);
         if (imageFileObjs) {
             for (var i = 0; i < imageFileObjs.length && i < 150; i++) {
-                var thumbnailPath = wsFunc.imageFromCash200(imageFileObjs[i].fsName, "C:\\Program Files\\Adobe\\Adobe After Effects CC 2015.3\\Support Files\\Scripts\\ScriptUI Panels\\Wall Studio Script\\cash200Address.json");
+                var thumbnailPath = wsFunc.imageFromCash200(imageFileObjs[i].fsName, programFolder + "/cash200Address.json");
                 var thumbnailObj = new File(thumbnailPath);
                 if(thumbnailObj){
                     preview.cells[i].image.icon = thumbnailObj;
